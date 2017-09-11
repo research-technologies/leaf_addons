@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+def validate_hostname!(hostname)
+  return if hostname
+  usage
+  $stderr.puts 'Please provide the hostname to import to.'
+  exit(1)
+end
+
+def validate_json_file!(json_file)
+  return if json_file && File.exist?(json_file)
+  usage
+  $stderr.puts 'Please provide a metadata file to import.'
+  exit(1)
+end
+
+def load_rails
+  $stderr.puts 'Loading environment...'
+  require File.expand_path('../../config/environment', __FILE__)
+  require 'importer'
+  puts 'Starting import...'
+end
+
+def main(hostname, json_file, dryrun)
+  validate_hostname!(hostname)
+  validate_json_file!(json_file)
+  load_rails
+
+  AccountElevator.switch!(hostname)
+  size = Importer::Eprints::JsonImporter.new(json_file).import_all
+
+  $stderr.puts "Imported #{size} record(s)."
+end
+
+def usage
+  $stderr.puts "Usage: #{$PROGRAM_NAME} <hostname> <json file>"
+end
+
+main(ARGV[0], ARGV[1], ARGV[2])
