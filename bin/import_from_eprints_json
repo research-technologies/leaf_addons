@@ -32,6 +32,10 @@ def main(hostname, json_file, dryrun)
   $stderr.puts "Imported #{size} record(s)."
 end
 
+def logger
+  Rails.logger
+end
+
 def usage
   $stderr.puts "Usage: #{$PROGRAM_NAME} <hostname> <json file>"
 end

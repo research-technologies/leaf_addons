@@ -37,11 +37,11 @@ module Importer
           attributes = {}
           eprint.each do |k, v|
             next if ignored.include?(k) || special.include?(k)
-            begin
+            if respond_to?(k.to_sym)
               attributes = method(k).call(v, attributes)
-            rescue
-              $stderr.puts "\nNo method for field #{k} - see log for details"
-              Rails.logger.warn "No method for field #{k} (#{$ERROR_INFO.message})"
+            else
+              $stderr.puts "\nNo method exists for field #{k}"
+              Rails.logger.warn "No method for field #{k}"
             end
           end
           attributes
@@ -68,6 +68,8 @@ module Importer
           when 'kfpub'
             'PublishedWork'
           when 'monograph'
+            'PublishedWork'
+          when 'book'
             'PublishedWork'
           else
             type.camelize

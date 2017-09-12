@@ -1,6 +1,7 @@
 module Importer
   module Eprints
     module JsonMapper
+
       # Fields to ignore when processing an eprint json
       #
       # @return [Array] ignored fields
@@ -155,7 +156,9 @@ module Importer
         attributes
       end
 
-      # Add documents to attributes
+      # Add documents to attributes;
+      #   :files_hash will be used for further processing outside of the object factory
+      #   :remote_files will be used by the Object Factory to download the file from the supplied URL
       #
       # @param val [Hash] the value
       # @param attributes [Hash] hash of attributes to update
@@ -172,7 +175,6 @@ module Importer
             remote_files << {
               file_name: doc['main'],
               url: "#{uri[0]}//#{uri[2]}/#{doc['eprintid']}/#{doc['pos']}/#{doc['main']}"
-
             }
           else
             files_hash = add_relation(doc, tmp_files_hash, files_hash)
@@ -244,8 +246,7 @@ module Importer
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def note(val, attributes)
-        # TODO: use a different note field?
-        attributes[:description] = [val]
+        attributes[:note] = [val]
         attributes
       end
 

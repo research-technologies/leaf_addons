@@ -48,6 +48,10 @@ def main(hostname, csv_file, files_directory, depth)
   puts "Imported #{size} records."
 end
 
+def logger
+  Rails.logger
+end
+
 def usage
   $stderr.puts "Usage: #{$PROGRAM_NAME} <hostname> <csv file> <files directory> <depth>"
   $stderr.puts "The csv file must contain two columns, the first is the id of the object to update; the second is the filename (for 0 depth) or directory (for 1 plus depths) to ingest."
