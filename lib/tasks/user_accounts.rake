@@ -6,11 +6,7 @@ namespace :hyku_leaf do
       puts "rake ulcc:make_me_admin['person1@example.com person2@example.com']"
     else
       args[:email].split(' ').each do |admin|
-        if admin.include? '@'
-          make_admin(admin)
-        else
-          puts "#{admin} is an invalid email address."
-        end
+		make_admin(admin) if validate_email(admin)
       end
     end
   end
@@ -70,7 +66,7 @@ namespace :hyku_leaf do
     users = CSV.read(csv)
     users.shift # skip header row
     users.each do |line|
-      validate_email(line)
+      process_line(line) if validate_email(line[0])
     end
   end
 
@@ -83,14 +79,15 @@ namespace :hyku_leaf do
     invite_user(line[0].strip, name, admin)
   end
 
-  # Check that the first element in the array contains '@'
+  # Check that the email is valid (ie. that it contains '@')
   #
-  # @param line [Array] an array of data from the users csv
-  def validate_email(line)
-    if line[0].include? '@'
-      process_line(line)
+  # @param email [String] the email
+  def validate_email(email)
+    if email.include? '@'
+      true
     else
-      puts "#{line[0]} is not a valid email address, please check your data"
+      puts "#{email} is not a valid email address, please check your data"
+      false
     end
   end
 end
