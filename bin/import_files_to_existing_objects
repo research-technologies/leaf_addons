@@ -35,6 +35,10 @@ def load_rails
   puts 'Starting import...'
 end
 
+def logger
+  Rails.logger
+end
+
 def main(hostname, csv_file, files_directory, depth)
   validate_hostname!(hostname)
   validate_csv_file!(csv_file)
@@ -46,10 +50,6 @@ def main(hostname, csv_file, files_directory, depth)
   size = Importer::DirectoryFilesImporter.new(csv_file, files_directory, depth).import_all
 
   puts "Imported #{size} records."
-end
-
-def logger
-  Rails.logger
 end
 
 def usage

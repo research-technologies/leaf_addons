@@ -17,9 +17,9 @@ module Importer
             update_work(fileset) # KFSPECIFIC - this will be the PDF
             update_visibility(fileset, @files_hash[fileset.label][:visibility])
           end
-          # KFSPECIFIC - ensure indexcodes.txt is added to PDF
+          # KFSPECIFIC - ensure indexcodes.txt is added to PDF not TXT
           next if @files_hash[fileset.label.gsub('.pdf', '.txt')][:additional_files].blank?
-          next if fileset.label.ends_with?('.txt') # KFSEPECIFIC - this will error, so don't do it
+          # next if fileset.label.ends_with?('.txt') # KFSEPECIFIC - this will error, so don't do it
           update_with_other_files(
             fileset,
             @files_hash[fileset.label.gsub('.pdf', '.txt')][:additional_files]
@@ -54,6 +54,8 @@ module Importer
         # @param [Hash] the filenames of the files to use for the update
         def update_with_other_files(fileset, additional_files)
           additional_files.each do |file_to_add|
+            puts file_to_add
+            puts fileset.title[0]
             file = download_remote_file(file_to_add[:url], file_to_add[:file_name])
             ingest_file(fileset, file.path, file_to_add[:type])
           end
@@ -65,13 +67,12 @@ module Importer
         # @param path [String] the file path
         # @param type [String] the 'type' of file
         def ingest_file(fileset, path, type)
-          # This will not add anything to the text file; results in binary store / timeout error
+          # This will not add anything to a text file; results in binary store / timeout error
           #   STATUS: 500 org.modeshape.jcr.value.binary.BinaryStoreException:
           #     java.io.IOException: java.util.concurrent.TimeoutException: Idle timeout expired: 30001/30000 ms
           #   added -XX:+UseG1GC to Java options to avoid 500 errors (@escowles suggestion); made no difference
           #   same file will add to PDF
-          # Moved away from IngestFileJob as it recharacterizes original_file and f***s it up
-          # Without the Derivatives part, below, the java.io exception above will happen on the PDF
+          # Without the Hydra::Derivatives::IoDecorator part, below, the java.io exception above will happen on the PDF
 
           local_file = Hydra::Derivatives::IoDecorator.new(File.open(path, "rb"))
           local_file.original_name = path.split('/').last
@@ -82,12 +83,6 @@ module Importer
 
           fileset.save!
 
-          # IngestFileJob.send(:perform_later,
-          #                    fileset, path,
-          #                    Hyrax.config.batch_user_key,
-          #                    relation: type,
-          #                    update_existing: true,
-          #                    versioning: false)
         rescue
           $stderr.puts "\nFailed to add #{path} - see log for details"
           Rails.logger.error "Failed to add #{path}: #{$ERROR_INFO}"

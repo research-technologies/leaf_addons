@@ -59,6 +59,7 @@ module Importer
         end
       end
 
+      # TODO create 'event' and add lookup
       # Add event_title to attributes
       #
       # @param val [String] the event_title value
@@ -72,12 +73,12 @@ module Importer
 
       # Standard fields
 
+      # TODO: should this be a separate field? schema alternative name?
       # Add alt_title to attributes
       #
       # @param val [String] the value
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
-      # TODO: should this be a separate field? schema alternative name?
       def alt_title(val, attributes)
         if attributes[:title].blank?
           attributes[:title] = [val]
@@ -87,6 +88,7 @@ module Importer
         attributes
       end
 
+      # TODO create 'organisation' and lookup
       # Add corp_creators to attributes
       #
       # @param val [Array] the value
@@ -101,6 +103,7 @@ module Importer
         attributes
       end
 
+      # TODO create 'person' and lookup
       # Add creators to attributes
       #
       # @param val [Array] the value
@@ -116,6 +119,7 @@ module Importer
         attributes
       end
 
+      # TODO create 'person' and lookup
       # Add editors to attributes
       #
       # @param val [Array] the value
@@ -131,6 +135,7 @@ module Importer
         attributes
       end
 
+      # TODO create 'organisation' and lookup
       # Add contributors to attributes
       #
       # @param val [Array] the value
@@ -195,6 +200,8 @@ module Importer
         attributes
       end
 
+      # TODO #KFSPECIFIC create KF_ID
+	  # TODO stop using custom id here, knock on elsewhere though
       # Add eprintid to attributes
       #
       # @param val [String] the value
@@ -205,6 +212,7 @@ module Importer
         # Pad out the identifier to 9 chars to match noid structure
         identifier.sub!('ep', 'ep0') while identifier.length < 9
         attributes[:former_id] = [val.to_s]
+		# attributes[:biblionumber] = [val.to_s]
         attributes[:id] = identifier
         attributes
       end
@@ -219,6 +227,7 @@ module Importer
         attributes
       end
 
+      # TODO lookup?
       # Add ispublished to attributes
       #
       # @param val [String] the value
@@ -290,6 +299,7 @@ module Importer
         attributes
       end
 
+      # TODO add Geonames service, blocked by https://github.com/samvera/hyrax/issues/1065
       # Add place_of_pub to attributes
       #
       # @param val [String] the value
@@ -300,7 +310,7 @@ module Importer
         attributes
       end
 
-      # Add pre_type to attributes
+      # Add pres_type to attributes
       #
       # @param val [String] the value
       # @param attributes [Hash] hash of attributes to update
@@ -349,6 +359,7 @@ module Importer
         attributes
       end
 
+      # TODO lookup?
       # Add subjects to attributes
       #
       # @param val [String] the value
@@ -373,13 +384,13 @@ module Importer
         attributes
       end
 
+      # TODO: lookup
       # Add type to attributes
       #
       # @param val [String] the value
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def type(val, attributes)
-        # TODO: lookup
         if attributes[:resource_type].blank?
           attributes[:resource_type] = [val]
         else
