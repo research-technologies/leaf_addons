@@ -14,6 +14,13 @@ def validate_json_file!(json_file)
   exit(1)
 end
 
+def validate_downloads_directory!(downloads_directory)
+  # TODO check that this directory is empty
+  return if downloads_directory && Dir.exist?(downloads_directory)
+  $stderr.puts 'Please provide an empty directory for downloading files into.'
+  exit(1)
+end
+
 def load_rails
   $stderr.puts 'Loading environment...'
   require File.expand_path('../../config/environment', __FILE__)
@@ -21,15 +28,16 @@ def load_rails
   puts 'Starting import...'
 end
 
-def main(hostname, json_file, dryrun)
+def main(hostname, json_file, downloads_directory)
   validate_hostname!(hostname)
   validate_json_file!(json_file)
+  validate_downloads_directory!(downloads_directory)
   load_rails
 
   AccountElevator.switch!(hostname)
-  size = Importer::Eprints::JsonImporter.new(json_file).import_all
+  size = Importer::Eprints::JsonImporter.new(json_file, downloads_directory).import_all
 
-  $stderr.puts "Imported #{size} record(s)."
+  $stderr.puts size
 end
 
 def logger

@@ -1,26 +1,27 @@
-module Importer
-  class FilesParser
-    include Enumerable
+module HykuLeaf
+  module Importer
+    class FilesParser
+      include Enumerable
 
-    # Initialize
-    #
-    # @param metadata_file [String] path to the metadata csv file
-    # @param files_directory [String] path of the directory containing the files to ingest
-    # @param depth [FixNum] the directory depth at which to find the files
-    def initialize(metadata_file, files_directory, depth)
-      @file_name = metadata_file
-      @directory = files_directory
-      @depth = depth.to_i
-    end
-
-    # @yieldparam attributes [Hash] the attributes from one row of the file
-    def each(&_block)
-      CSV.foreach(@file_name) do |row|
-        yield [row[0],build_files_hash(row[1])]
+      # Initialize
+      #
+      # @param metadata_file [String] path to the metadata csv file
+      # @param files_directory [String] path of the directory containing the files to ingest
+      # @param depth [FixNum] the directory depth at which to find the files
+      def initialize(metadata_file, files_directory, depth)
+        @file_name = metadata_file
+        @directory = files_directory
+        @depth = depth.to_i
       end
-    end
 
-    private
+      # @yieldparam attributes [Hash] the attributes from one row of the file
+      def each(&_block)
+        CSV.foreach(@file_name) do |row|
+          yield [row[0], build_files_hash(row[1])]
+        end
+      end
+
+      private
 
       # Build a hash of files to be ingested, using the depth to recurse the correct number of directories
       #
@@ -32,7 +33,7 @@ module Importer
           return [] unless File.file?(file)
           build_files([file])
         elsif @depth > 0
-          dir = File.join(@directory,directory_or_file)
+          dir = File.join(@directory, directory_or_file)
           return [] unless File.directory?(dir)
           build_files(build_file_path(dir))
         end
@@ -49,7 +50,7 @@ module Importer
           i -= 1
         end
         # Reject directories. Once we reach the specified depth, we want files only.
-        Dir.glob(path).reject{ |e| File.directory? e }
+        Dir.glob(path).reject {|e| File.directory? e}
       end
 
       # Build an array of files
@@ -58,17 +59,17 @@ module Importer
       # @return array of files
       def build_files(files)
         files_array = []
-        files.each do | file |
+        files.each do |file|
           u = Hyrax::UploadedFile.new
-          unless User.find_by_user_key( User.batch_user_key ).nil?
-            u.user_id = User.find_by_user_key( User.batch_user_key ).id
+          unless User.find_by_user_key(User.batch_user_key).nil?
+            u.user_id = User.find_by_user_key(User.batch_user_key).id
           end
           u.file = CarrierWave::SanitizedFile.new(file)
           u.save
-          files_array <<  u.id
+          files_array << u.id
         end
         files_array
       end
-
+    end
   end
 end

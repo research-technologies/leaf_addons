@@ -1,21 +1,24 @@
-module Importer
-  module Eprints
-    class JsonParser
-      include Enumerable
-      include Eprints::JsonMapper
+module HykuLeaf
+  module Importer
+    module Eprints
+      class JsonParser
+        include Enumerable
+        include Eprints::JsonMapper
+        include Eprints::JsonDownloader
 
-      def initialize(file_name)
-        @file_name = file_name
-      end
-
-      # @yieldparam attributes [Hash] the attributes from one eprint
-      def each(&_block)
-        JSON.parse(File.read(@file_name)).each do |eprint|
-          yield(attributes(eprint))
+        def initialize(file_name, downloads_directory)
+          @file_name = file_name
+          @downloads = downloads_directory
         end
-      end
 
-      private
+        # @yieldparam attributes [Hash] the attributes from one eprint
+        def each(&_block)
+          JSON.parse(File.read(@file_name)).each do |eprint|
+            yield(attributes(eprint))
+          end
+        end
+
+        private
 
         # Build the attributes for passing to Fedora
 
@@ -53,6 +56,7 @@ module Importer
         # @param attributes [Hash] hash of attributes to update
         # @return [Hash] attributes
         def special_attributes(eprint, attributes)
+          documents(eprint['documents'])
           attributes.merge!(event_title(eprint['event_title'], eprint['event_type']))
           attributes.merge!(date(eprint['date'], eprint['date_type']))
           attributes.merge!(access_setting(eprint['metadata_visibility'], eprint['eprint_status']))
@@ -65,16 +69,17 @@ module Importer
         # @return [String] the Model name
         def find_model(type)
           case type
-          when 'kfpub'
-            'PublishedWork'
-          when 'monograph'
-            'PublishedWork'
-          when 'book'
-            'PublishedWork'
-          else
-            type.camelize
+            when 'kfpub'
+              'PublishedWork'
+            when 'monograph'
+              'PublishedWork'
+            when 'book'
+              'PublishedWork'
+            else
+              type.camelize
           end
         end
+      end
     end
   end
 end

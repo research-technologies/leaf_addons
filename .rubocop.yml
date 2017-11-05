@@ -1,0 +1,112 @@
+require: rubocop-rspec
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 2.4.1
+  DisplayCopNames: true
+  Include:
+    - '**/Rakefile'
+  Exclude:
+    - 'spec/test_app_templates/**/*'
+
+Bundler/DuplicatedGem:  # This doesn't work with engine_cart
+  Enabled: false
+
+Layout/IndentationConsistency:
+  EnforcedStyle: rails
+
+Lint/ImplicitStringConcatenation:
+  Exclude:
+    - 'lib/generators/hyrax/**/*'
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 200
+
+Metrics/AbcSize:
+  Max: 26
+
+Metrics/BlockLength:
+  ExcludedMethods: ['included']
+  Exclude:
+    - 'hyrax.gemspec'
+    - 'spec/**/*.rb'
+
+Metrics/MethodLength:
+  Max: 13
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/CollectionMethods:
+  PreferredMethods:
+    collect: 'map'
+    collect!: 'map!'
+    inject: 'reduce'
+    detect: 'find'
+    find_all: 'select'
+
+Style/FileName: # https://github.com/bbatsov/rubocop/issues/2973
+  Exclude:
+    - 'Gemfile'
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/SingleLineBlockParams:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
+Rails/ApplicationJob:
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+# We define custom methods like `find_by_user_key`,
+# `find_by_created_date`, etc
+Rails/DynamicFindBy:
+  Enabled: false
+
+# By default RSpec/MessageSpies has the following:
+#   Prefer have_received for setting message expectations. Setup form as a spy using allow or instance_spy.
+# The default assumes EnforcedStyle is 'have_received'. Most of our specs are 'receive'
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/ExpectActual:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
+
+RSpec/MessageExpectation:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/LeadingSubject:
+  Enabled: false

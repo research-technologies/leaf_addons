@@ -1,25 +1,26 @@
-module Importer
-  # Import an Eprints3 json file.
-  module Eprints
-    class JsonImporter
-      def initialize(metadata_file)
-        @model = 'Object'
-        @metadata_file = metadata_file
-        @files = [] # don't send any files
-      end
+module HykuLeaf
+  module Importer
+    # Import an Eprints3 json file.
+    module Eprints
+      class JsonImporter
+        def initialize(metadata_file, downloads_directory)
+          @model = 'Object'
+          @metadata_file = metadata_file
+          @downloads = downloads_directory
+          @files = [] # don't send any files
+        end
 
-      # Import the items
-      #
-      # @return count of items imported
-      def import_all
-        count = 0
-        ids = []
+        # Import the items
+        #
+        # @return count of items imported
+        def import_all
+          count = 0
+          ids = []
           parser.each do |attributes|
             @model = attributes[:model]
             attributes.delete(:model)
             attributes[:edit_groups] = ['admin']
             create_fedora_objects(attributes)
-            ids << { attributes[:id] => attributes.delete(:files_hash) }
             count += 1
           end
           # Update filesets with extracted_text
@@ -28,15 +29,19 @@ module Importer
             id = work.keys.first
             add_to_work_filesets(id, work[id])
           end
+          # TODO return something about downloads too
+          message = "Imported #{size} record(s).\n"
+          message += "Files have been downloaded to #{@downloads}\n"
+          message += "Import with:\n"
+          message += "  bin/import_files_to_existing_objects hostname #{@downloads}/downloads.csv #{@downloads} 1"
+          message
+        end
 
-        count
-      end
-
-      private
+        private
 
         # Create a parser object with the metadata file
         def parser
-          Eprints::JsonParser.new(@metadata_file)
+          Eprints::JsonParser.new(@metadata_file, @downloads)
         end
 
         # Build a factory to create the objects in fedora.
@@ -45,16 +50,7 @@ module Importer
         def create_fedora_objects(attributes)
           Factory.for(@model).new(attributes).run
         end
-
-        # Add to filesets for the work
-        #
-        # @param id [String] id of the work
-        # @param files_hash [Hash] info about files to add to work
-        def add_to_work_filesets(id, files_hash)
-          work = ActiveFedora::Base.find(id)
-          file_processor = Eprints::JsonFilesProcessor.new(work, files_hash)
-          file_processor.update_fileset
-        end
+      end
     end
   end
 end

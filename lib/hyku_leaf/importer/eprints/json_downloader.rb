@@ -1,26 +1,41 @@
-module Importer
-  module Eprints
-    module JsonDownloader
-      include Enumerable
+module HykuLeaf
+  module Importer
+    module Eprints
+      module JsonDownloader
+        include Enumerable
 
-      # Currently Unused
-
-      # Download each file listed in hash['documents']
-      #
-      # @param eprint [Hash] a hash of the eprint metadata
-      # @return [String] the directory containing the downloaded files
-      def download(eprint)
-        dir = make_eprint_directory(eprint['eprintid'].to_s)
-        eprint['documents'].each do |doc|
-          download_url = setup_download_url(doc)
-          path = setup_download_path(dir, download_url)
-          next if File.exist? path
-          do_download(download_url, path)
+        # Download each file listed in hash['documents']
+        #
+        # @param eprint [Hash] a hash of the eprint document metadata
+        # @return [String] the directory containing the downloaded files
+        def download(eprint_documents)
+          dir = make_eprint_directory(eprint['eprintid'].to_s)
+          eprint_documents.each do |doc|
+            download_url = setup_download_url(doc)
+            # do the if relation thing here
+            docid = doc['docid']
+            visibility = nil
+            if doc['relation'].present?
+              doc['relation'].each do | rel |
+                if rel['type'].include? 'isIndexCodesVersionOf'
+                  docid = rel['uri'].split('/')[-1]
+                  visibility = 'restricted'
+                end
+              end
+            end
+            path = setup_download_path(dir, docid, download_url)
+            next if File.exist? path
+            do_download(download_url, path)
+            # what to do if this fails, log and skip?
+            if verify_checksum(doc['hash'], path)
+              write_to_csv(make_identifier(doc['eprintid']),path.split('/')[-1],visibility)
+            else
+              # TODO log
+            end
+          end
         end
-        dir
-      end
 
-      private
+        private
 
         # Construct the download url from the document hash
         #
@@ -36,8 +51,8 @@ module Importer
         # @param dir [String] the directory
         # @param download [String] the download url
         # @return [String] the download path (including filename to write)
-        def setup_download_path(dir, download)
-          "#{dir}/#{download.to_s.split('/')[-1]}"
+        def setup_download_path(dir, docid, download)
+          "#{dir}/#{docid}_#{download.to_s.split('/')[-1]}"
         end
 
         # Do the download
@@ -59,10 +74,34 @@ module Importer
         # @param eprint_id [String] the eprint id
         # @return [String] path to the new directory
         def make_eprint_directory(eprint_id)
-          dir = File.join(@directory, eprint_id)
+          dir = File.join(@downloads, eprint_id)
           Dir.mkdir(dir, 0o770) unless Dir.exist? dir
           File.absolute_path(dir, '')
         end
+      end
+
+      def verify_checksum(md5, path)
+        true
+      end
+
+      def write_to_csv(id,filename,visibility=nil)
+        downloads_csv = "#{@downloads}/downloads.csv"
+
+        # if file exists open for appending: @downloads/downloads.csv
+        # otherwise open for appending
+        line =  "#{id},#{filename}"
+        line += "#{visibility}" unless visibility.nil?
+        line += "\n"
+        if File.exist?(downloads_csv)
+          downloads_file = File.open(downloads_csv, 'a')
+          # append to file
+        else
+          downloads_file = File.open(downloads_csv, 'w')
+          # write to file
+        end
+
+      end
+
     end
   end
 end
