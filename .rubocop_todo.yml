@@ -67,7 +67,7 @@ Layout/EmptyLinesAroundExceptionHandlingKeywords:
 Layout/EmptyLinesAroundModuleBody:
   Exclude:
     - 'lib/hyku_leaf/importer/eprints/json_mapper.rb'
-    - 'lib/hyku_leaf/importer/factory/concerns/base_behaviour.rb'
+    - 'lib/hyku_leaf/importer/factory/concerns/base_factory_behaviour.rb'
 
 # Offense count: 26
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -235,7 +235,7 @@ Style/Documentation:
     - 'lib/hyku_leaf/importer/eprints/json_importer.rb'
     - 'lib/hyku_leaf/importer/eprints/json_mapper.rb'
     - 'lib/hyku_leaf/importer/eprints/json_parser.rb'
-    - 'lib/hyku_leaf/importer/factory/concerns/base_behaviour.rb'
+    - 'lib/hyku_leaf/importer/factory/concerns/base_factory_behaviour.rb'
     - 'lib/hyku_leaf/importer/factory/concerns/conference_item_behaviour.rb'
     - 'lib/hyku_leaf/importer/factory/concerns/published_work_behaviour.rb'
     - 'lib/hyku_leaf/importer/files_parser.rb'

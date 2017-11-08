@@ -8,7 +8,7 @@ require 'hyku_leaf/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'hyku_leaf'
-  spec.version       = DogBiscuits::VERSION
+  spec.version       = HykuLeaf::VERSION
   spec.authors       = ['Julie Allinson']
   spec.email         = ['julie.allinson@london.ac.uk']
 
@@ -23,13 +23,18 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  # spec.add_dependency
+  spec.add_dependency 'hyrax', '2.0.0.rc2'
 
-  spec.add_development_dependency 'engine_cart', '~> 1.2'
-  spec.add_development_dependency "factory_girl_rails", '~> 4.4'
+  spec.add_development_dependency 'byebug'
+  spec.add_development_dependency 'engine_cart'
+  spec.add_development_dependency 'factory_bot_rails', '~> 4.0'
   spec.add_development_dependency 'fcrepo_wrapper'
-  spec.add_development_dependency 'rspec', '~> 3.1'
-  spec.add_development_dependency 'rspec-rails', '~> 3.1'
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rspec-rails'
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop-rails'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'solr_wrapper'
   spec.add_development_dependency 'webmock'
 end

@@ -1,11 +1,8 @@
 module HykuLeaf
   module Importer
-    module Eprints
+    module Factory
       extend ActiveSupport::Autoload
-
-      autoload :JsonDownloader
-      autoload :JsonMapper
-
+      autoload :BaseFactoryBehaviour
     end
   end
 end

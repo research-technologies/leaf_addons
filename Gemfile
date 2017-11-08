@@ -2,21 +2,10 @@
 
 source 'https://rubygems.org'
 
-# if using gems from git, we can't load them in the gemspec
-# gem 'git'
-# gem 'hyrax', github: 'projecthydra-labs/hyrax'
-# gem 'hyrax', '2.0.0.rc1'
-
-# Specify your gem's dependencies in dog_biscuits.gemspec
 gemspec
 
-group :development, :test do
-  gem 'rubocop', require: false
-  gem 'rubocop-rspec', require: false
-  gem 'simplecov', require: false
-end
 # BEGIN ENGINE_CART BLOCK
-# engine_cart: 1.1.0
+# engine_cart: 1.2.0
 # engine_cart stanza: 0.10.0
 # the below comes from engine_cart, a gem used to test this Rails engine gem in the context of a Rails app.
 file = File.expand_path('Gemfile', ENV['ENGINE_CART_DESTINATION'] || ENV['RAILS_ROOT'] || File.expand_path('.internal_test_app', File.dirname(__FILE__)))

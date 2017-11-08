@@ -1,7 +1,7 @@
 module HykuLeaf
   module Importer
     module Factory
-      module BaseBehaviour
+      module BaseFactoryBehaviour
 
         # Override
         def transform_attributes

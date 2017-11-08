@@ -1,5 +1,4 @@
 require 'importer'
-require 'importer/eprints'
 
 RSpec.describe Importer::Eprints::JsonImporter do
   let(:metadata_file) { 'spec/fixtures/eprints_json/eprints.json' }

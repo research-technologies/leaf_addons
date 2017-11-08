@@ -1,9 +1,12 @@
 require 'importer'
-require 'importer/eprints'
 
 RSpec.describe Importer::DirectoryFilesImporter do
 
+  let(:published_work_factory) {double}
+
   # This object needs to exist
+  # TODO FactoryBot this
+  # HykuLeaf doesn't know about PublishedWork
   before(:all) do
     @work = PublishedWork.new
     @work.title = ['Test title']
@@ -15,11 +18,10 @@ RSpec.describe Importer::DirectoryFilesImporter do
     @work.destroy.eradicate
   end
 
-  context 'when depth 0 is passed' do
+  describe 'when depth 0 is passed' do
     let(:metadata_file) {"#{fixture_path}/directory/depth-0.csv"}
     let(:files_directory) {"#{fixture_path}/directory/depth-0"}
     let(:importer) {described_class.new(metadata_file, files_directory, 0)}
-    let(:published_work_factory) {double}
 
     it 'update published works with files' do
 
@@ -32,11 +34,10 @@ RSpec.describe Importer::DirectoryFilesImporter do
     end
   end
 
-  context 'when depth 1 is passed' do
+  describe 'when depth 1 is passed' do
     let(:metadata_file) {"#{fixture_path}/directory/depth-1.csv"}
     let(:files_directory) {"#{fixture_path}/directory/depth-1"}
     let(:importer) {described_class.new(metadata_file, files_directory, 1)}
-    let(:published_work_factory) {double}
 
     it 'update published works with files from directory' do
       expect(Importer::Factory::PublishedWorkFactory).to receive(:new)

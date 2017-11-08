@@ -1,11 +1,14 @@
-  require 'importer'
-require 'importer/eprints'
+require 'importer'
 
 RSpec.describe Importer::Eprints::JsonParser do
   let(:parser) { described_class.new(file) }
   let(:attributes) { parser.attributes }
   let(:file) { "#{fixture_path}/eprints_json/eprints.json" }
   let(:first_record) { parser.first }
+
+  # TODO test that download is called
+  # TODO test when the checksum matches and when it doesn't
+  # TODO test the CSV file is written
 
   it 'returns the full set of attributes for the fixture' do
     stub_request(:get, /.*/)

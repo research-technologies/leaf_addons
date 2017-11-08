@@ -26,11 +26,11 @@ module HykuLeaf
             path = setup_download_path(dir, docid, download_url)
             next if File.exist? path
             do_download(download_url, path)
-            # what to do if this fails, log and skip?
             if verify_checksum(doc['hash'], path)
               write_to_csv(make_identifier(doc['eprintid']),path.split('/')[-1],visibility)
             else
-              # TODO log
+              $stderr.puts "\nChecksum mismatch for #{path}. File not added."
+              Rails.logger.error "Checksum mismatch for #{path}. File not added."
             end
           end
         end
@@ -81,25 +81,30 @@ module HykuLeaf
       end
 
       def verify_checksum(md5, path)
-        true
+
+        checksum = Digest::MD5.new
+        IO.foreach(path) {|x| checksum << x }
+
+        if checksum.hexdigest == md5
+          true
+        else
+          false
+        end
       end
 
       def write_to_csv(id,filename,visibility=nil)
-        downloads_csv = "#{@downloads}/downloads.csv"
+        downloads_csv = File.join('downloads.csv', @downloads)
 
-        # if file exists open for appending: @downloads/downloads.csv
-        # otherwise open for appending
         line =  "#{id},#{filename}"
         line += "#{visibility}" unless visibility.nil?
         line += "\n"
         if File.exist?(downloads_csv)
-          downloads_file = File.open(downloads_csv, 'a')
-          # append to file
+          downloads_file = File.open(downloads_csv, 'a+')
+          downloads_file.write(line)
         else
-          downloads_file = File.open(downloads_csv, 'w')
-          # write to file
+          downloads_file = File.read(downloads_csv, 'w')
+          downloads_file.write(line)
         end
-
       end
 
     end
