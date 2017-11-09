@@ -1,0 +1,184 @@
+[
+  {
+    "source": "kfpubs.mrc",
+    "field_i_dont_understand": "stuff",
+    "eprintid": 6289,
+    "date": 1968,
+    "userid": 1,
+    "documents": [
+      {
+        "language": "en",
+        "placement": 0,
+        "eprintid": 6289,
+        "files": [
+          {
+            "hash_type": "MD5",
+            "mtime": "2014-11-10 20:34:39",
+            "datasetid": "document",
+            "fileid": 1678,
+            "objectid": 1119,
+            "uri": "http:\/\/some.url.org\/id\/file\/1678",
+            "mime_type": "text\/plain",
+            "hash": "d41d8cd98f00b204e9800998ecf8427e",
+            "filesize": 260415,
+            "filename": "006289.txt"
+          }
+        ],
+        "rev_number": 1,
+        "uri": "http:\/\/some.url.org\/id\/document\/1119",
+        "main": "006289.txt",
+        "mime_type": "text\/plain",
+        "docid": 1119,
+        "format": "text",
+        "security": "public",
+        "pos": 1
+      },
+      {
+        "language": "en",
+        "placement": 0,
+        "eprintid": 6289,
+        "files": [
+          {
+            "hash_type": "MD5",
+            "mtime": "2014-11-10 20:34:39",
+            "datasetid": "document",
+            "fileid": 1679,
+            "objectid": 1120,
+            "uri": "http:\/\/some.url.org\/id\/file\/1679",
+            "mime_type": "application\/pdf",
+            "hash": "d41d8cd98f00b204e9800998ecf8427e",
+            "filesize": 4012808,
+            "filename": "006289.pdf"
+          }
+        ],
+        "rev_number": 1,
+        "uri": "http:\/\/some.url.org\/id\/document\/1120",
+        "main": "006289.pdf",
+        "mime_type": "application\/pdf",
+        "docid": 1120,
+        "format": "text",
+        "security": "public",
+        "pos": 2
+      },
+      {
+        "language": "en",
+        "placement": 3,
+        "eprintid": 6289,
+        "files": [
+          {
+            "hash_type": "MD5",
+            "mtime": "2014-11-10 23:39:29",
+            "datasetid": "document",
+            "fileid": 3730,
+            "objectid": 2659,
+            "uri": "http:\/\/some.url.org\/id\/file\/3730",
+            "mime_type": "text\/x-c",
+            "hash": "d41d8cd98f00b204e9800998ecf8427e",
+            "filesize": 41317,
+            "filename": "indexcodes.txt"
+          }
+        ],
+        "rev_number": 1,
+        "uri": "http:\/\/some.url.org\/id\/document\/2659",
+        "main": "indexcodes.txt",
+        "mime_type": "text\/x-c",
+        "docid": 2659,
+        "format": "other",
+        "relation": [
+          {
+            "type": "http:\/\/eprints.org\/relation\/isVersionOf",
+            "uri": "\/id\/document\/1119"
+          },
+          {
+            "type": "http:\/\/eprints.org\/relation\/isVolatileVersionOf",
+            "uri": "\/id\/document\/1119"
+          },
+          {
+            "type": "http:\/\/eprints.org\/relation\/isIndexCodesVersionOf",
+            "uri": "\/id\/document\/1119"
+          }
+        ],
+        "security": "public",
+        "pos": 3,
+        "formatdesc": "Generate index codes conversion from text to indexcodes"
+      },
+      {
+        "language": "en",
+        "placement": 4,
+        "eprintid": 6289,
+        "files": [
+          {
+            "hash_type": "MD5",
+            "mtime": "2014-11-17 17:48:14",
+            "datasetid": "document",
+            "fileid": 4849,
+            "objectid": 3778,
+            "uri": "http:\/\/some.url.org\/id\/file\/4849",
+            "mime_type": "image\/png",
+            "hash": "d41d8cd98f00b204e9800998ecf8427e",
+            "filesize": 5482,
+            "filename": "small.jpg"
+          }
+        ],
+        "rev_number": 2,
+        "uri": "http:\/\/some.url.org\/id\/document\/3778",
+        "main": "small.jpg",
+        "mime_type": "image\/png",
+        "docid": 3778,
+        "format": "other",
+        "relation": [
+          {
+            "type": "http:\/\/eprints.org\/relation\/isVersionOf",
+            "uri": "\/id\/document\/1120"
+          },
+          {
+            "type": "http:\/\/eprints.org\/relation\/isVolatileVersionOf",
+            "uri": "\/id\/document\/1120"
+          },
+          {
+            "type": "http:\/\/eprints.org\/relation\/issmallThumbnailVersionOf",
+            "uri": "\/id\/document\/1120"
+          }
+        ],
+        "security": "public",
+        "pos": 4,
+        "formatdesc": "Thumbnails conversion from text to thumbnail_small"
+      }
+    ],
+    "rev_number": 1,
+    "dir": "disk0\/00\/00\/62\/89",
+    "keywords": "Building design, Corridors",
+    "lastmod": "2014-11-10 20:34:39",
+    "ispublished": "pub",
+    "publisher": "King Edward's Hospital Fund for London",
+    "metadata_visibility": "show",
+    "date_type": "published",
+    "eprint_status": "archive",
+    "status_changed": "2014-11-10 20:34:39",
+    "datestamp": "2014-11-10 20:34:39",
+    "uri": "http:\/\/some.url.org\/id\/eprint\/6289",
+    "note": "Pagination: 132p.",
+    "full_text_status": "public",
+    "refereed": "TRUE",
+    "editors": [
+      {
+        "name": {
+          "lineage": null,
+          "given": "W. A. H.",
+          "honourific": null,
+          "family": "Holroyd"
+        }
+      }
+    ],
+    "abstract": "This document originates ...",
+    "type": "kfpub",
+    "title": "Hospital traffic and supply problems",
+    "corp_creators": [
+      "King Edward's Hospital Fund for London",
+      "Hospital Design Unit (Ministry of Health, Great Britain)"
+    ],
+    "pages": 132,
+    "place_of_pub": "London"
+  }
+]
+

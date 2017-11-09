@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Importer
   module Factory
     class PublishedWorkFactory < ObjectFactory
-      include HykuLeaf::BaseFactoryBehaviour
+      include HykuLeaf::Importer::Factory::BaseFactoryBehaviour
       self.klass = PublishedWork
     end
   end

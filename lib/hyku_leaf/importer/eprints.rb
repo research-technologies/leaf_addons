@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HykuLeaf
   module Importer
     module Eprints
@@ -5,7 +7,6 @@ module HykuLeaf
 
       autoload :JsonDownloader
       autoload :JsonMapper
-
     end
   end
 end

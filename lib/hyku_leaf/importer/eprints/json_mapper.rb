@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HykuLeaf
   module Importer
     module Eprints
@@ -66,10 +68,9 @@ module HykuLeaf
         # Process the documents hash
         #
         # @param val [Hash] the value
-        def documents(val)
-          download(val)
+        def documents(val, eprintid)
+          download(val, eprintid)
         end
-
 
         # TODO create 'event' and add lookup
         # Add event_title to attributes
@@ -276,7 +277,6 @@ module HykuLeaf
           attributes
         end
 
-        # TODO add Geonames service, blocked by https://github.com/samvera/hyrax/issues/1065
         # Add place_of_pub to attributes
         #
         # @param val [String] the value
@@ -388,8 +388,6 @@ module HykuLeaf
           attributes
         end
 
-        private
-
         # Create a name string from parts
         #
         # @param name [Hash] name parts
@@ -405,9 +403,9 @@ module HykuLeaf
         # @param eprintid [String] the eprint identifier
         # @return [String] the padded identifier
         def make_identifier(eprintid)
-          return eprintid if eprintid.length >= 9
-          identifier = "#{eprintid}"
-          identifier << "0" while identifier.length < 9
+          return eprintid if eprintid.to_s.length >= 9
+          identifier = eprintid.to_s
+          identifier += "0" while identifier.length < 9
           identifier
         end
 

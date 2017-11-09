@@ -7,17 +7,15 @@ AllCops:
   Include:
     - '**/Rakefile'
   Exclude:
-    - 'spec/test_app_templates/**/*'
+    - 'spec/test_app_templates/**/*.rb'
+    - 'lib/generators/hyku_leaf/**/*.rb'
+    - 'for_removal/**/*.rb'
 
 Bundler/DuplicatedGem:  # This doesn't work with engine_cart
   Enabled: false
 
 Layout/IndentationConsistency:
   EnforcedStyle: rails
-
-Lint/ImplicitStringConcatenation:
-  Exclude:
-    - 'lib/generators/hyrax/**/*'
 
 Lint/AmbiguousBlockAssociation:
   Enabled: false
@@ -31,11 +29,15 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   ExcludedMethods: ['included']
   Exclude:
-    - 'hyrax.gemspec'
+    - 'hyku_leaf.gemspec'
     - 'spec/**/*.rb'
 
 Metrics/MethodLength:
   Max: 13
+
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/**/*.rb'
 
 Style/AsciiComments:
   Enabled: false
@@ -68,6 +70,9 @@ Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/Documentation:
+  Enabled: false
+
+Style/NumericPredicate:
   Enabled: false
 
 Style/SingleLineBlockParams:

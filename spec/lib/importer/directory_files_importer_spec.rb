@@ -1,21 +1,14 @@
+# frozen_string_literal: true
+
 require 'importer'
 
 RSpec.describe Importer::DirectoryFilesImporter do
 
   let(:published_work_factory) {double}
+  let(:fixture_path) { 'spec/fixtures' }
 
-  # This object needs to exist
-  # TODO FactoryBot this
-  # HykuLeaf doesn't know about PublishedWork
-  before(:all) do
-    @work = PublishedWork.new
-    @work.title = ['Test title']
-    @work.id = 'test_id'
-    @work.save!
-  end
-
-  after(:all) do
-    @work.destroy.eradicate
+  before do
+    FactoryBot.create(:published_work)
   end
 
   describe 'when depth 0 is passed' do
@@ -24,7 +17,6 @@ RSpec.describe Importer::DirectoryFilesImporter do
     let(:importer) {described_class.new(metadata_file, files_directory, 0)}
 
     it 'update published works with files' do
-
       expect(Importer::Factory::PublishedWorkFactory).to receive(:new)
                                                              .with(hash_including(:uploaded_files))
                                                              .with(hash_including(:id))

@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'hyrax', '2.0.0.rc2'
 
   spec.add_development_dependency 'byebug'
+  spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'engine_cart'
   spec.add_development_dependency 'factory_bot_rails', '~> 4.0'
   spec.add_development_dependency 'fcrepo_wrapper'
@@ -34,7 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rails'
   spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'solr_wrapper'
   spec.add_development_dependency 'webmock'
 end

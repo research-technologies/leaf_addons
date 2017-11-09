@@ -21,9 +21,11 @@ This generator adds importers into the application.
       injection += "\n  autoload :Factory\n"
       injection += "\n  autoload :FilesParser\n"
 
-      inject_into_file importer, after: "extend ActiveSupport::Autoload" do
-        injection
-      end unless importer_text.include? injection
+      unless importer_text.include? injection
+        inject_into_file importer, after: "extend ActiveSupport::Autoload" do
+          injection
+        end
+      end
     else
       copy_file 'lib/importer.rb', 'lib/importer.rb'
     end
@@ -35,12 +37,15 @@ This generator adds importers into the application.
   end
 
   def create_factories
-    if File.exist? ('lib/importer/factory.rb')
+    if File.exist? 'lib/importer/factory.rb'
+      factory_text = File.read('lib/importer/factory.rb')
       factory = 'lib/importer/factory.rb'
       injection = "    \nautoload :PublishedWorkFactory"
-      injection += "    \nautoload :ConferenceItemFactory"
-      inject_into_file factory, after: "" do
-        injection
+      injection += "    \nautoload :ConferenceItemFactory\n"
+      unless factory_text.include? 'PublishedWorkFactory'
+        inject_into_file factory, after: "" do
+          injection
+        end
       end
     else
       copy_file 'lib/importer/factory.rb', 'lib/importer/factory.rb'
@@ -49,11 +54,12 @@ This generator adds importers into the application.
     copy_file 'lib/importer/factory/published_work_factory.rb', 'lib/importer/factory/published_work_factory.rb'
   end
 
-  def create_specs
-    directory 'spec/lib/importer', 'spec/lib/importer'
-    directory 'spec/fixtures/directory', 'spec/fixtures/directory'
-    directory 'spec/fixtures/eprints_json', 'spec/fixtures/eprints_json'
-  end
+  # def create_specs
+  #   directory 'spec/lib/importer', 'spec/lib/importer'
+  #   directory 'spec/fixtures/directory', 'spec/fixtures/directory'
+  #   directory 'spec/fixtures/eprints_json', 'spec/fixtures/eprints_json'
+  #   directory 'spec/factories', 'spec/factories'
+  # end
 
   def create_bin_files
     bin_one = 'bin/import_files_to_existing_objects'
@@ -86,5 +92,4 @@ This generator adds importers into the application.
       run "wget https://raw.githubusercontent.com/samvera-labs/hyku/master/lib/importer/log_subscriber.rb -O lib/importer/log_subscriber.rb"
     end
   end
-
 end

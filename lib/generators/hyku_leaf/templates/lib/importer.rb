@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Importer
   extend ActiveSupport::Autoload
   eager_autoload do
-  # autoload :AttachFiles # what is this?
+    # autoload :AttachFiles # what is this?
     autoload :Eprints
     autoload :DirectoryFilesImporter
     autoload :FilesParser

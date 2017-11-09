@@ -24,20 +24,18 @@
           # Fix for running on vagrant on windows with nfs
           def configure_tmp_directory
             if ENV['USER'] == 'vagrant'
-              injection = "\n  # Relocate RAILS_TMP"
-              injection += "\n  config.assets.configure do |env|"
-              injection += "\n    env.cache = Sprockets::Cache::FileStore.new("
-              injection += "\n      ENV['RAILS_TMP'] + '/cache/assets'"
-              injection += "\n    )"
-              injection += "\n  end if ENV['RAILS_TMP']"
+              injection = "\n    # Relocate RAILS_TMP"
+              injection += "\n    config.assets.configure do |env|"
+              injection += "\n      env.cache = Sprockets::Cache::FileStore.new("
+              injection += "\n        ENV['RAILS_TMP'] + '/cache/assets'"
+              injection += "\n      )"
+              injection += "\n    end if ENV['RAILS_TMP']"
 
               inject_into_file 'config/application.rb', after: '# -- all .rb files in that directory are automatically loaded.' do
                 injection
               end
-            # assumes use of rbenv
-              run 'touch .rbenv-vars'
-              run 'echo "RAILS_TMP=/tmp" >> .rbenv-vars'
-              run 'rbenv vars'
+
+              run 'export RAILS_TMP=/TMP'
             end
           end
           # end of methods running only on localhost

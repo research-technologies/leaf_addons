@@ -19,7 +19,7 @@
             "objectid": 1119,
             "uri": "http:\/\/some.url.org\/id\/file\/1678",
             "mime_type": "text\/plain",
-            "hash": "c734642470505dffab1615d5aadb592b",
+            "hash": "595a65e37fae34585065f159671a95e8",
             "filesize": 260415,
             "filename": "006289.txt"
           }
@@ -147,7 +147,7 @@
     ],
     "rev_number": 1,
     "dir": "disk0\/00\/00\/62\/89",
-    "keywords": "Building design, Corridors, Efficiency, Escalators, Food distribution, Hospital supplies, Lifts, Meal services, Storage furniture",
+    "keywords": "Building design, Corridors",
     "lastmod": "2014-11-10 20:34:39",
     "ispublished": "pub",
     "publisher": "King Edward's Hospital Fund for London",
@@ -170,9 +170,9 @@
         }
       }
     ],
-    "abstract": "This document originates from a one-day conference and its purpose is to report on studies of issues and options in the field of hospital traffic and supply which were carried out within the context of the Greenwich District Hospital development project which was seen as a laboratory situation in which new ideas could be tested and assessed. The particular issues covered in this document are: the purpose of a hospital building and different types of layouts; the movement of people vertically by lifts and escalators, and horizontally along corridors; the movement of goods and the collection of items for disposal or reprocessing; the supply of meals; the storage of goods.",
+    "abstract": "This document originates ...",
     "type": "kfpub",
-    "title": "Hospital traffic and supply problems : a report of studies undertaken by members of the Hospital Design Unit of the Ministry of Health within the context of the Greenwich District Hospital development project",
+    "title": "Hospital traffic and supply problems",
     "corp_creators": [
       "King Edward's Hospital Fund for London",
       "Hospital Design Unit (Ministry of Health, Great Britain)"

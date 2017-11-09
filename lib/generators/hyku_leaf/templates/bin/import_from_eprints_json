@@ -1,28 +1,29 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 def validate_hostname!(hostname)
   return if hostname
   usage
-  $stderr.puts 'Please provide the hostname to import to.'
+  warn 'Please provide the hostname to import to.'
   exit(1)
 end
 
 def validate_json_file!(json_file)
   return if json_file && File.exist?(json_file)
   usage
-  $stderr.puts 'Please provide a metadata file to import.'
+  warn 'Please provide a metadata file to import.'
   exit(1)
 end
 
 def validate_downloads_directory!(downloads_directory)
-  # TODO check that this directory is empty
+  # TODO: check that this directory is empty
   return if downloads_directory && Dir.exist?(downloads_directory)
-  $stderr.puts 'Please provide an empty directory for downloading files into.'
+  warn 'Please provide an empty directory for downloading files into.'
   exit(1)
 end
 
 def load_rails
-  $stderr.puts 'Loading environment...'
+  warn 'Loading environment...'
   require File.expand_path('../../config/environment', __FILE__)
   require 'importer'
   puts 'Starting import...'
@@ -37,7 +38,7 @@ def main(hostname, json_file, downloads_directory)
   AccountElevator.switch!(hostname)
   size = Importer::Eprints::JsonImporter.new(json_file, downloads_directory).import_all
 
-  $stderr.puts size
+  warn size
 end
 
 def logger
@@ -45,7 +46,7 @@ def logger
 end
 
 def usage
-  $stderr.puts "Usage: #{$PROGRAM_NAME} <hostname> <json file>"
+  warn "Usage: #{$PROGRAM_NAME} <hostname> <json file>"
 end
 
 main(ARGV[0], ARGV[1], ARGV[2])
