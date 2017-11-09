@@ -54,12 +54,9 @@ This generator adds importers into the application.
     copy_file 'lib/importer/factory/published_work_factory.rb', 'lib/importer/factory/published_work_factory.rb'
   end
 
-  # def create_specs
-  #   directory 'spec/lib/importer', 'spec/lib/importer'
-  #   directory 'spec/fixtures/directory', 'spec/fixtures/directory'
-  #   directory 'spec/fixtures/eprints_json', 'spec/fixtures/eprints_json'
-  #   directory 'spec/factories', 'spec/factories'
-  # end
+  def create_specs
+     directory 'spec/factories', 'spec/factories'
+  end
 
   def create_bin_files
     bin_one = 'bin/import_files_to_existing_objects'
@@ -78,6 +75,9 @@ This generator adds importers into the application.
       gsub_file bin_one, /AccountElevator.switch/, "# AccountElevator.switch"
       gsub_file bin_two, /AccountElevator.switch/, "# AccountElevator.switch"
     end
+
+    run 'chmod +x bin_one'
+    run 'chmod +x bin_two'
   end
 
   # If these don't exist, download them
