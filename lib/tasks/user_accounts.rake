@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :hyku_leaf do
-  desc "Make users administrators. Supply a space separated list, eg ['person1@example.com person2@example.com']"
+  desc "Make users administrators in Hyku. Supply a space separated list, eg ['person1@example.com person2@example.com']."
   task :make_me_admin, [:email] => [:environment] do |_t, args|
     if args[:email].nil?
       puts 'Supply a space separated list of email addresses, like this'
@@ -13,7 +13,7 @@ namespace :hyku_leaf do
     end
   end
 
-  desc "Invite users given in the supplied csv file_path. The csv must contain a header row and three columns: " \
+  desc "Invite users to a Hyku given in the supplied csv file_path. The csv must contain a header row and three columns: " \
         "email, display name, admin. The admin column should contain the word true if the user" \
         "should be made an administrator."
   task :invite_users, [:path] => [:environment] do |_t, args|
@@ -36,7 +36,7 @@ namespace :hyku_leaf do
 
   # Make the user an administrator
   def make_admin(email)
-    user = User.find_by(email: email)
+    user = User.find_by(email: email.lowercase)
     if user.nil?
       puts "#{email} doesn't have a user account so cannot be made an admin."
     else
@@ -78,7 +78,7 @@ namespace :hyku_leaf do
   def process_line(line)
     name = line[1].nil? ? nil : line[1].strip
     admin = true unless line[2].nil? && line[2] != "true"
-    invite_user(line[0].strip, name, admin)
+    invite_user(line[0].lowercase.strip, name, admin)
   end
 
   # Check that the email is valid (ie. that it contains '@')

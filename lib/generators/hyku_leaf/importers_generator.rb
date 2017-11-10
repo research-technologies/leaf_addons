@@ -4,7 +4,8 @@ class HykuLeaf::ImportersGenerator < Rails::Generators::Base
   source_root File.expand_path('../templates', __FILE__)
 
   desc '
-This generator adds importers into the application.
+This generator adds eprints_json and directory_of_files importers into the application.
+This works for Hyku and Hyrax apps.
       '
 
   def banner
@@ -80,7 +81,7 @@ This generator adds importers into the application.
     run 'chmod +x bin_two'
   end
 
-  # If these don't exist, download them
+  # These exist in Hyku, but not in Hyrax. If these don't exist, download them.
   def download_files
     unless File.exist?('lib/importer/factory/object_factory.rb')
       run "wget https://raw.githubusercontent.com/samvera-labs/hyku/master/lib/importer/factory/object_factory.rb -O lib/importer/factory/object_factory.rb"

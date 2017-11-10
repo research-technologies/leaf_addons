@@ -218,7 +218,7 @@ module HykuLeaf
         end
 
         # Add keywords to attributes
-        # cuments
+        #
         # @param val [String] the value
         # @param attributes [Hash] hash of attributes to update
         # @return [Hash] attributes
