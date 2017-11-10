@@ -54,11 +54,7 @@ This works for Hyku and Hyrax apps.
     copy_file 'lib/importer/factory/conference_item_factory.rb', 'lib/importer/factory/conference_item_factory.rb'
     copy_file 'lib/importer/factory/published_work_factory.rb', 'lib/importer/factory/published_work_factory.rb'
   end
-
-  def create_specs
-     directory 'spec/factories', 'spec/factories'
-  end
-
+  
   def create_bin_files
     bin_one = 'bin/import_files_to_existing_objects'
     bin_two = 'bin/import_from_eprints_json'

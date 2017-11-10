@@ -9,7 +9,7 @@ RSpec.describe Importer::FilesParser do
   let(:metadata_file_1) { "#{fixture_path}/directory/depth-1.csv" }
   let(:files_directory_1) { "#{fixture_path}/directory/depth-1" }
 
-  context 'With files at depth 0' do
+  context 'when files at depth 0' do
     let(:parser_0) { described_class.new(metadata_file_0, files_directory_0, 0) }
     let(:metadata_file_0) { "#{fixture_path}/directory/depth-0.csv" }
     let(:files_directory_0) { "#{fixture_path}/directory/depth-0" }
@@ -22,7 +22,7 @@ RSpec.describe Importer::FilesParser do
     end
   end
 
-  context 'With files at depth 1' do
+  context 'when files at depth 1' do
     let(:parser_1) { described_class.new(metadata_file_1, files_directory_1, 1) }
     let(:first_record) { parser_1.first }
 
@@ -32,7 +32,7 @@ RSpec.describe Importer::FilesParser do
     end
   end
 
-  context 'With files at depth 2' do
+  context 'when files at depth 2' do
     let(:parser_2) { described_class.new(metadata_file_1, files_directory_1, 2) }
     let(:first_record) { parser_2.first }
 

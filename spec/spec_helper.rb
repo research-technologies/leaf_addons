@@ -23,6 +23,9 @@ require 'byebug' unless ENV['TRAVIS']
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
+FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.find_definitions
+
 # require 'support/factory_bot'
 require 'active_fedora/cleaner'
 RSpec.configure do |config|
