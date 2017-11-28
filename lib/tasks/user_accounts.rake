@@ -36,7 +36,7 @@ namespace :hyku_leaf do
 
   # Make the user an administrator
   def make_admin(email)
-    user = User.find_by(email: email.lowercase)
+    user = User.find_by(email: email.downcase)
     if user.nil?
       puts "#{email} doesn't have a user account so cannot be made an admin."
     else
@@ -78,7 +78,7 @@ namespace :hyku_leaf do
   def process_line(line)
     name = line[1].nil? ? nil : line[1].strip
     admin = true unless line[2].nil? && line[2] != "true"
-    invite_user(line[0].lowercase.strip, name, admin)
+    invite_user(line[0].downcase.strip, name, admin)
   end
 
   # Check that the email is valid (ie. that it contains '@')
