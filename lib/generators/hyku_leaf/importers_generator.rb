@@ -73,8 +73,8 @@ This works for Hyku and Hyrax apps.
       gsub_file bin_two, /AccountElevator.switch/, "# AccountElevator.switch"
     end
 
-    run 'chmod +x bin_one'
-    run 'chmod +x bin_two'
+    run 'chmod +x bin/import_files_to_existing_objects'
+    run 'chmod +x bin/import_from_eprints_json'
   end
 
   # These exist in Hyku, but not in Hyrax. If these don't exist, download them.
