@@ -6,6 +6,7 @@ module Importer
     eager_autoload do
       autoload :JsonImporter
       autoload :JsonParser
+      autoload :JsonMapperOverrides
     end
   end
 end
