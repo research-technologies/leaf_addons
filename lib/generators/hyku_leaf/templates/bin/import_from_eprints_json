@@ -46,7 +46,7 @@ def logger
 end
 
 def usage
-  warn "Usage: #{$PROGRAM_NAME} <hostname> <json file>"
+  warn "Usage: #{$PROGRAM_NAME} <hostname> <json file> <download_path>"
 end
 
 main(ARGV[0], ARGV[1], ARGV[2])

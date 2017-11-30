@@ -30,11 +30,7 @@ This works for Hyku and Hyrax apps.
     else
       copy_file 'lib/importer.rb', 'lib/importer.rb'
     end
-    copy_file 'lib/importer/directory_files_importer.rb', 'lib/importer/directory_files_importer.rb'
-    copy_file 'lib/importer/files_parser.rb', 'lib/importer/files_parser.rb'
-    copy_file 'lib/importer/eprints.rb', 'lib/importer/eprints.rb'
-    copy_file 'lib/importer/directory_files_importer.rb', 'lib/importer/directory_files_importer.rb'
-    directory 'lib/importer/eprints', 'lib/importer/eprints'
+    directory 'lib/importer', 'lib/importer'
   end
 
   def create_factories
@@ -44,7 +40,7 @@ This works for Hyku and Hyrax apps.
       injection = "    \nautoload :PublishedWorkFactory"
       injection += "    \nautoload :ConferenceItemFactory\n"
       unless factory_text.include? 'PublishedWorkFactory'
-        inject_into_file factory, after: "" do
+        inject_into_file factory, after: "eager_autoload do\n" do
           injection
         end
       end
