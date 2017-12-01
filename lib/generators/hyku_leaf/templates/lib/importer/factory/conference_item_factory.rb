@@ -2,9 +2,7 @@
 
 module Importer
   module Factory
-    class ConferenceItemFactory < ObjectFactory
-      include HykuLeaf::Importer::Factory::BaseFactoryBehaviour
-
+    class ConferenceItemFactory < BaseFactory
       self.klass = ConferenceItem
     end
   end

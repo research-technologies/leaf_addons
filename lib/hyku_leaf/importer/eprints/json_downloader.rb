@@ -29,7 +29,8 @@ module HykuLeaf
           path = setup_download_path(dir, docid, download_url)
           do_download(download_url, path)
           if verify_checksum(doc['files'].first['hash'], path)
-            write_to_csv(make_identifier(doc['eprintid']), path.split('/')[-1], visibility)
+            write_to_downloads_csv(make_identifier(doc['eprintid']), path.split('/')[-2])
+            write_to_files_list_csv(make_identifier(doc['eprintid']), path.split('/')[-1], visibility)
           else
             warn "Checksum mismatch for #{path}. File not added."
             Rails.logger.error "Checksum mismatch for #{path}. File not added."
@@ -81,20 +82,36 @@ module HykuLeaf
           checksum.hexdigest == md5
         end
 
-        # Write a line to the downloads.csv
+        # Write a line to the downloaded_files.csv
         #
         # @param id [String] id of the item in fedora
         # @param filename [String] downloaded flename
         # @param visibility [String] visibility (default=nil)
-        def write_to_csv(id, filename, visibility = nil)
-          downloads_csv = File.join(@downloads, 'downloads.csv')
+        def write_to_files_list_csv(id, filename, visibility = nil)
+          downloads_csv = File.join(@downloads, 'downloaded_files.csv')
           line = "#{id},#{filename},"
           line += visibility.to_s unless visibility.nil?
           line += "\n"
-          if File.exist?(downloads_csv)
+          if File.exist?(downloads_csv) && !File.read(downloads_csv).include?(line)
             File.open(downloads_csv, 'a+') { |f| f << line }
           else
             File.open(downloads_csv, 'w') { |f| f << line }
+          end
+        end
+
+        # Write a line to the imported_files.csv
+        #
+        # @param id [String] id of the item in fedora
+        # @param filename [String] downloaded flename
+        # @param visibility [String] visibility (default=nil)
+        def write_to_downloads_csv(id, folder)
+          import_files_csv = File.join(@downloads, 'import_files.csv')
+          line = "#{id},#{folder}\n"
+
+          if File.exist?(import_files_csv) && !File.read(import_files_csv).include?(line)
+            File.open(import_files_csv, 'a+') { |f| f << line }
+          else
+            File.open(import_files_csv, 'w') { |f| f << line }
           end
         end
 
