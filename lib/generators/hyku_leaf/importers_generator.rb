@@ -37,7 +37,8 @@ This works for Hyku and Hyrax apps.
     if File.exist? 'lib/importer/factory.rb'
       factory_text = File.read('lib/importer/factory.rb')
       factory = 'lib/importer/factory.rb'
-      injection = "    \nautoload :PublishedWorkFactory"
+      injection = "    \nautoload :BaseFactory"
+      injection += "    \nautoload :PublishedWorkFactory"
       injection += "    \nautoload :ConferenceItemFactory\n"
       unless factory_text.include? 'PublishedWorkFactory'
         inject_into_file factory, after: "eager_autoload do\n" do

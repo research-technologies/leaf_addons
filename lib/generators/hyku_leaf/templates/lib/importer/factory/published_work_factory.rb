@@ -2,8 +2,7 @@
 
 module Importer
   module Factory
-    class PublishedWorkFactory < ObjectFactory
-      include HykuLeaf::Importer::Factory::BaseFactoryBehaviour
+    class PublishedWorkFactory < BaseFactory
       self.klass = PublishedWork
     end
   end

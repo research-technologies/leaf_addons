@@ -32,8 +32,9 @@ module Importer
         end
         message = "Imported #{count} record(s).\n"
         message += "Files have been downloaded to #{@downloads}\n"
+        message += "A list of files with their visibility has been written to #{@downloads}/downloaded_files.csv"
         message += "Import with:\n"
-        message += "  bin/import_files_to_existing_objects hostname #{@downloads}/downloads.csv #{@downloads} 1"
+        message += "  bin/import_files_to_existing_objects `hostname` #{@downloads}/import_files.csv #{@downloads} 1"
         message
       end
 

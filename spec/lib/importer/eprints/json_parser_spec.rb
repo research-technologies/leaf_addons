@@ -56,15 +56,22 @@ RSpec.describe Importer::Eprints::JsonParser do
       File.write('/tmp/6289/1119_006289.txt', '')
     end
 
-    it 'writes the downloads.csv file' do
+    it 'writes the downloaded_files.csv file' do
       parser_checksum.first
-      expect(File).to be_exist('/tmp/downloads.csv')
-      expect(File.read('/tmp/downloads.csv')).to eq("628900000,1119_006289.txt,\n628900000,1120_006289.pdf,\n628900000,1119_indexcodes.txt,restricted\n")
+      expect(File).to be_exist('/tmp/downloaded_files.csv')
+      expect(File.read('/tmp/downloaded_files.csv')).to eq("628900000,1119_006289.txt,\n628900000,1120_006289.pdf,\n628900000,1119_indexcodes.txt,restricted\n")
+    end
+
+    it 'writes the import_files.csv file' do
+      parser_checksum.first
+      expect(File).to be_exist('/tmp/import_files.csv')
+      expect(File.read('/tmp/import_files.csv')).to eq("628900000,6289\n")
     end
 
     after do
       Dir["/tmp/6289/*.*"].each { |file| File.delete(file) }
-      File.delete('/tmp/downloads.csv')
+      File.delete('/tmp/downloaded_files.csv')
+      File.delete('/tmp/import_files.csv')
     end
   end
 end
