@@ -355,13 +355,17 @@ module HykuLeaf
         # @param attributes [Hash] hash of attributes to update
         # @return [Hash] attributes
         def pres_type(val, attributes)
-          # TODO: lookup
           if attributes[:resource_type].blank?
-            attributes[:resource_type] = [val]
+            attributes[:resource_type] = [find_type(val)]
           else
-            attributes[:resource_type] << val
+            attributes[:resource_type] << find_type(val)
           end
           attributes
+        end
+
+        # TODO ensure value is in resource types list
+        def find_type(type)
+          type.titleize
         end
 
         # Add publisher to attributes
