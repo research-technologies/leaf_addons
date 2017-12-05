@@ -38,13 +38,16 @@ module Importer
           @model = obj.class
           attributes = { id: row[0], uploaded_files: row[1] }
           create_fedora_objects(attributes)
+          write_to_files_list_csv(attributes[:id], attributes[:uploaded_files])
+          count += 1
         rescue
           warn("\nSomething went wrong with #{row[0]} - skipping this line - check logs for details")
           Rails.logger.warn "Something went wrong with #{row[0]} (#{$ERROR_INFO.message})"
         end
-        count += 1
       end
-      count
+      message = "Imported #{count} record(s).\n"
+      message += "A list of files imported has been written to #{@files_directory}/uploaded_files.csv\n"
+      message
     end
 
     private
@@ -57,6 +60,23 @@ module Importer
       # Build a factory to create the objects in fedora.
       def create_fedora_objects(attributes)
         Factory.for(@model).new(attributes).run
+      end
+
+      # Write a line to the uploaded_files.csv
+      #
+      # @param object_id [String] id of the item in fedora
+      # @param db_id [Array] uploaded file database ids
+      def write_to_files_list_csv(object_id, db_ids)
+        uploads_csv = File.join(@directory, 'uploaded_files.csv')
+        line = ''
+        db_ids.each do | id |
+          line += "#{object_id},#{id},#{Hyrax::UploadedFile.find_by_id(id)[:file]}\n"
+        end
+        if File.exist?(uploads_csv) && !File.read(uploads_csv).include?(line)
+          File.open(uploads_csv, 'a+') {|f| f << line}
+        else
+          File.open(uploads_csv, 'w') {|f| f << line}
+        end
       end
   end
 end
