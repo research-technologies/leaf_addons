@@ -29,7 +29,7 @@ RSpec.describe Importer::Eprints::JsonParser do
         refereed: [true],
         editor: ["Holroyd, W. A. H."],
         abstract: ["This document originates ..."],
-        resource_type: ["kfpub"],
+        resource_type: ["Kfpub"],
         title: ["Hospital traffic and supply problems"],
         creator: ["King Edward's Hospital Fund for London",
                   "Hospital Design Unit (Ministry of Health, Great Britain)"],

@@ -99,11 +99,10 @@ module HykuLeaf
           end
         end
 
-        # Write a line to the imported_files.csv
+        # Write a line to the import_files.csv
         #
         # @param id [String] id of the item in fedora
-        # @param filename [String] downloaded flename
-        # @param visibility [String] visibility (default=nil)
+        # @param folder [String] folder to import
         def write_to_downloads_csv(id, folder)
           import_files_csv = File.join(@downloads, 'import_files.csv')
           line = "#{id},#{folder}\n"

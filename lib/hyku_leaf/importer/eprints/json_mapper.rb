@@ -429,7 +429,6 @@ module HykuLeaf
           attributes
         end
 
-        # TODO: lookup
         # Add type to attributes
         #
         # @param val [String] the value
@@ -437,9 +436,9 @@ module HykuLeaf
         # @return [Hash] attributes
         def type(val, attributes)
           if attributes[:resource_type].blank?
-            attributes[:resource_type] = [val]
+            attributes[:resource_type] = [find_type(val)]
           else
-            attributes[:resource_type] << val
+            attributes[:resource_type] << find_type(val)
           end
           attributes
         end

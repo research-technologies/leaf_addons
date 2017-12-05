@@ -48,9 +48,9 @@ def main(hostname, csv_file, files_directory, depth)
   load_rails
 
   AccountElevator.switch!(hostname)
-  size = Importer::DirectoryFilesImporter.new(csv_file, files_directory, depth).import_all
+  message = Importer::DirectoryFilesImporter.new(csv_file, files_directory, depth).import_all
 
-  puts "Imported #{size} records."
+  puts message
 end
 
 def usage

@@ -35,7 +35,6 @@ RSpec.configure do |config|
     c.syntax = %i[should expect]
   end
   config.before(:suite) do
-    # nothing to do here
   end
   config.after(:suite) do
     ActiveFedora::Cleaner.clean!
