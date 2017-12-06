@@ -5,8 +5,7 @@
 module HykuLeaf
   module Importer
     module Eprints
-      module JsonMapper
-
+      module JsonAttributes
         # Build the attributes for passing to Fedora
 
         # @param eprint [Hash] json for a single eprint
@@ -56,14 +55,14 @@ module HykuLeaf
         # @return [String] the Model name
         def find_model(type)
           case type
-            when 'kfpub'
-              'PublishedWork'
-            when 'monograph'
-              'PublishedWork'
-            when 'book'
-              'PublishedWork'
-            else
-              type.camelize
+          when 'kfpub'
+            'PublishedWork'
+          when 'monograph'
+            'PublishedWork'
+          when 'book'
+            'PublishedWork'
+          else
+            type.camelize
           end
         end
 
@@ -74,15 +73,15 @@ module HykuLeaf
         # @return [Array] ignored fields
         def ignored
           [
-              'lastmod',
-              'uri',
-              'status_changed',
-              'rev_number',
-              'datestamp',
-              'dir',
-              'source',
-              'userid',
-              'full_text_status'
+            'lastmod',
+            'uri',
+            'status_changed',
+            'rev_number',
+            'datestamp',
+            'dir',
+            'source',
+            'userid',
+            'full_text_status'
           ]
         end
 
@@ -91,13 +90,13 @@ module HykuLeaf
         # @return [Array] special fields
         def special
           [
-              'date',
-              'date_type',
-              'metadata_visibility',
-              'eprint_status',
-              'event_type',
-              'event_title',
-              'documents'
+            'date',
+            'date_type',
+            'metadata_visibility',
+            'eprint_status',
+            'event_type',
+            'event_title',
+            'documents'
           ]
         end
 
@@ -106,9 +105,9 @@ module HykuLeaf
         # Use metadata_visibility and eprint_status to construct this
         def access_setting(metadata_visibility, eprint_status)
           if metadata_visibility == 'show' && eprint_status == 'archive'
-            {visibility: 'open'}
+            { visibility: 'open' }
           else
-            {visibility: 'restricted'}
+            { visibility: 'restricted' }
           end
         end
 
@@ -120,10 +119,10 @@ module HykuLeaf
         def date(val, type)
           # TODO: extend to other date types
           case type
-            when 'published'
-              {date_published: [val.to_s]}
-            else
-              {date: [val.to_s]}
+          when 'published'
+            { date_published: [val.to_s] }
+          else
+            { date: [val.to_s] }
           end
         end
 
@@ -134,7 +133,7 @@ module HykuLeaf
           download(val, eprintid)
         end
 
-        # TODO create 'event' and add lookup
+        # TODO: create 'event' and add lookup
         # Add event_title to attributes
         #
         # @param val [String] the event_title value
@@ -143,7 +142,7 @@ module HykuLeaf
         def event_title(val, event_type)
           event = val
           event += " (#{event_type})" unless event.nil? || event_type.blank?
-          event.blank? ? {} : {presented_at: [event.to_s]}
+          event.blank? ? {} : { presented_at: [event.to_s] }
         end
 
         # Standard fields
@@ -163,7 +162,7 @@ module HykuLeaf
           attributes
         end
 
-        # TODO create 'organisation' and lookup
+        # TODO: create 'organisation' and lookup
         # Add corp_creators to attributes
         #
         # @param val [Array] the value
@@ -178,7 +177,7 @@ module HykuLeaf
           attributes
         end
 
-        # TODO create 'person' and lookup
+        # TODO: create 'person' and lookup
         # Add creators to attributes
         #
         # @param val [Array] the value
@@ -194,7 +193,7 @@ module HykuLeaf
           attributes
         end
 
-        # TODO create 'person' and lookup
+        # TODO: create 'person' and lookup
         # Add editors to attributes
         #
         # @param val [Array] the value
@@ -210,7 +209,7 @@ module HykuLeaf
           attributes
         end
 
-        # TODO create 'organisation' and lookup
+        # TODO: create 'organisation' and lookup
         # Add contributors to attributes
         #
         # @param val [Array] the value
@@ -267,7 +266,7 @@ module HykuLeaf
           attributes
         end
 
-        # TODO lookup?
+        # TODO: lookup?
         # Add ispublished to attributes
         #
         # @param val [String] the value
@@ -363,7 +362,7 @@ module HykuLeaf
           attributes
         end
 
-        # TODO ensure value is in resource types list
+        # TODO: ensure value is in resource types list
         def find_type(type)
           type.titleize
         end
@@ -473,7 +472,6 @@ module HykuLeaf
           identifier += "0" while identifier.length < 9
           identifier
         end
-
       end
     end
   end

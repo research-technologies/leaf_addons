@@ -12,17 +12,15 @@ This works for Hyku and Hyrax apps.
     say_status("info", "Adding the Importers", :blue)
   end
 
-  # what about factories?
   def create_importers
     if File.exist?('lib/importer.rb')
-      importer_text = File.read('lib/importer.rb')
       importer = 'lib/importer.rb'
       injection = "\n  autoload :Eprints"
       injection += "\n  autoload :DirectoryFilesImporter"
       injection += "\n  autoload :Factory\n"
       injection += "\n  autoload :FilesParser\n"
 
-      unless importer_text.include? injection
+      unless File.read(importer).include? injection
         inject_into_file importer, after: "extend ActiveSupport::Autoload" do
           injection
         end
@@ -35,12 +33,12 @@ This works for Hyku and Hyrax apps.
 
   def create_factories
     if File.exist? 'lib/importer/factory.rb'
-      factory_text = File.read('lib/importer/factory.rb')
       factory = 'lib/importer/factory.rb'
       injection = "    \nautoload :BaseFactory"
       injection += "    \nautoload :PublishedWorkFactory"
       injection += "    \nautoload :ConferenceItemFactory\n"
-      unless factory_text.include? 'PublishedWorkFactory'
+
+      unless File.read(factory).include? 'PublishedWorkFactory'
         inject_into_file factory, after: "eager_autoload do\n" do
           injection
         end
@@ -51,7 +49,7 @@ This works for Hyku and Hyrax apps.
     copy_file 'lib/importer/factory/conference_item_factory.rb', 'lib/importer/factory/conference_item_factory.rb'
     copy_file 'lib/importer/factory/published_work_factory.rb', 'lib/importer/factory/published_work_factory.rb'
   end
-  
+
   def create_bin_files
     bin_one = 'bin/import_files_to_existing_objects'
     bin_two = 'bin/import_from_eprints_json'
@@ -74,16 +72,4 @@ This works for Hyku and Hyrax apps.
     run 'chmod +x bin/import_from_eprints_json'
   end
 
-  # These exist in Hyku, but not in Hyrax. If these don't exist, download them.
-  def download_files
-    unless File.exist?('lib/importer/factory/object_factory.rb')
-      run "wget https://raw.githubusercontent.com/samvera-labs/hyku/master/lib/importer/factory/object_factory.rb -O lib/importer/factory/object_factory.rb"
-    end
-    unless File.exist?('lib/importer/factory/string_literal_processor.rb')
-      run "wget https://raw.githubusercontent.com/samvera-labs/hyku/master/lib/importer/factory/string_literal_processor.rb -O lib/importer/factory/string_literal_processor.rb"
-    end
-    unless File.exist?('lib/importer/log_subscriber.rb')
-      run "wget https://raw.githubusercontent.com/samvera-labs/hyku/master/lib/importer/log_subscriber.rb -O lib/importer/log_subscriber.rb"
-    end
-  end
 end

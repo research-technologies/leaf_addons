@@ -6,7 +6,7 @@ module HykuLeaf
       extend ActiveSupport::Autoload
 
       autoload :JsonDownloader
-      autoload :JsonMapper
+      autoload :JsonAttributes
     end
   end
 end

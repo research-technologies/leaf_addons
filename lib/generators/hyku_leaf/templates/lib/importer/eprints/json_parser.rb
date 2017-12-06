@@ -4,10 +4,10 @@ module Importer
   module Eprints
     class JsonParser
       include Enumerable
-      include HykuLeaf::Importer::Eprints::JsonMapper
+      include HykuLeaf::Importer::Eprints::JsonAttributes
       include HykuLeaf::Importer::Eprints::JsonDownloader
       # For locally overriden methods
-      include Importer::Eprints::JsonMapperOverrides
+      include Importer::Eprints::JsonAttributesOverrides
 
       def initialize(file_name, downloads_directory)
         @file_name = file_name
