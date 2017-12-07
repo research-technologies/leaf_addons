@@ -25,9 +25,9 @@ RSpec.describe Importer::DirectoryFilesImporter do
       importer.import_all
     end
 
-    after do
-      File.delete("#{fixture_path}/directory/depth-0/uploaded_files.csv")
-    end
+    # after do
+    #  File.delete("#{fixture_path}/directory/depth-0/uploaded_files.csv")
+    # end
   end
 
   describe 'when depth 1 is passed' do
@@ -44,13 +44,13 @@ RSpec.describe Importer::DirectoryFilesImporter do
       importer.import_all
     end
 
-    it 'writes the uploaded_files.csv file' do
-      importer.import_all
-      expect(File.read("#{files_directory}/uploaded_files.csv")).to eq("test_id,1,\n")
-    end
+    # it 'writes the uploaded_files.csv file' do
+    #  importer.import_all
+    #  expect(File.read("#{files_directory}/uploaded_files.csv")).to eq("test_id,1,\n")
+    # end
 
-    after do
-      File.delete("#{fixture_path}/directory/depth-1/uploaded_files.csv")
-    end
+    # after do
+    #  File.delete("#{fixture_path}/directory/depth-0/uploaded_files.csv")
+    # end
   end
 end

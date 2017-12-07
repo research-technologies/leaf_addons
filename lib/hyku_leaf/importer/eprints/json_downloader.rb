@@ -61,6 +61,7 @@ module HykuLeaf
         # @return [String] the visibility
         def visibility(doc)
           visibility = nil
+          visibility = 'restricted' if doc['security'].present? && doc['security'] != 'public'
           if doc['relation'].present?
             doc['relation'].each do |rel|
               if rel['type'].include? 'isIndexCodesVersionOf'

@@ -42,7 +42,7 @@ module HykuLeaf
         # @param attributes [Hash] hash of attributes to update
         # @return [Hash] attributes
         def special_attributes(eprint, attributes)
-          documents(eprint['documents'], eprint['eprintid'])
+          documents(eprint['documents'], eprint['eprintid']) unless eprint['documents'].nil?
           attributes.merge!(event_title(eprint['event_title'], eprint['event_type']))
           attributes.merge!(date(eprint['date'], eprint['date_type']))
           attributes.merge!(access_setting(eprint['metadata_visibility'], eprint['eprint_status']))
@@ -130,7 +130,7 @@ module HykuLeaf
         #
         # @param val [Hash] the value
         def documents(val, eprintid)
-          download(val, eprintid)
+          download(val, eprintid) if val.present?
         end
 
         # TODO: create 'event' and add lookup
