@@ -133,6 +133,8 @@ module HykuLeaf
           "#{dir}/#{docid}_#{download.to_s.split('/')[-1]}"
         end
 
+        # rubocop:disable Lint/RescueWithoutErrorClass
+
         # Do the download
         #
         # @param download [String] the uri to download
@@ -143,7 +145,11 @@ module HykuLeaf
           File.open(path, 'wb') do |contents|
             contents << open(download, &:read)
           end
+        rescue
+          Rails.logger.warn "Something went wrong when attempting to download #{download} (#{$ERROR_INFO.message})"
         end
+
+        # rubocop:enable Lint/RescueWithoutErrorClass
 
         # Create a directory for the downloaded files
         #

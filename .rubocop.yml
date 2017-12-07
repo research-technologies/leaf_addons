@@ -53,7 +53,7 @@ Style/CollectionMethods:
     detect: 'find'
     find_all: 'select'
 
-Style/FileName: # https://github.com/bbatsov/rubocop/issues/2973
+Naming/FileName: # https://github.com/bbatsov/rubocop/issues/2973
   Exclude:
     - 'Gemfile'
 
