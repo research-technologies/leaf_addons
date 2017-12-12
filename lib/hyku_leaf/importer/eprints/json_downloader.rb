@@ -146,7 +146,8 @@ module HykuLeaf
             contents << open(download, &:read)
           end
         rescue
-          Rails.logger.warn "Something went wrong when attempting to download #{download} (#{$ERROR_INFO.message})"
+          warn "Something went wrong when attempting to download #{download} to #{path} (#{$ERROR_INFO.message})"
+          Rails.logger.warn "Something went wrong when attempting to download #{download} to #{path} (#{$ERROR_INFO.message})"
         end
 
         # rubocop:enable Lint/RescueWithoutErrorClass

@@ -24,7 +24,7 @@ namespace :hyku_leaf do
       puts "the admin column should contain the word true to indicate that the given user should be an admin"
     else
       begin
-        process_csv(args[:path])
+        process_user_csv(args[:path])
       rescue
         puts "The file, #{args[:path]}, does not exist or is invalid, please check the path is correct and make " \
         "sure the file is in the right format (comma separated)"
@@ -64,18 +64,18 @@ namespace :hyku_leaf do
   # Read the csv and process each line
   #
   # @param csv [String] the path to a csv file
-  def process_csv(csv)
+  def process_user_csv(csv)
     users = CSV.read(csv)
     users.shift # skip header row
     users.each do |line|
-      process_line(line) if validate_email(line[0])
+      process_user_line(line) if validate_email(line[0])
     end
   end
 
   # Process a single line from the users csv
   #
   # @param line [Array] an array of data from the users csv
-  def process_line(line)
+  def process_user_line(line)
     name = line[1].nil? ? nil : line[1].strip
     admin = true unless line[2].nil? && line[2] != "true"
     invite_user(line[0].downcase.strip, name, admin)
