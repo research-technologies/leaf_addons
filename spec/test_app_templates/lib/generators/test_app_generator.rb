@@ -15,7 +15,7 @@
           end
 
           def install_dog_biscuits
-            gem 'dog_biscuits', :git => 'https://github.com/ULCC/dog_biscuits'
+            gem 'dog_biscuits', :git => 'https://github.com/samvera-labs/dog_biscuits'
             generate 'dog_biscuits:install', '-f'
             generate 'dog_biscuits:work ConferenceItem', '-f'
             generate 'dog_biscuits:work PublishedWork ', '-f'

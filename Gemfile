@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 # until this is a rubygem, add it here
 gem 'git'
-gem 'dog_biscuits', git: 'https://github.com/ULCC/dog_biscuits'
+gem 'dog_biscuits', git: 'https://github.com/samvera-labs/dog_biscuits'
 
 gemspec
 
