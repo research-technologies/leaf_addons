@@ -8,11 +8,6 @@ gem 'dog_biscuits', git: 'https://github.com/samvera-labs/dog_biscuits'
 
 gemspec
 
-group :development, :test do
-  gem 'rubocop', require: false
-  gem 'rubocop-rspec', require: false
-end
-
 # BEGIN ENGINE_CART BLOCK
 # engine_cart: 1.2.0
 # engine_cart stanza: 0.10.0

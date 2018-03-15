@@ -4,7 +4,6 @@ require 'importer'
 require 'csv'
 
 RSpec.describe Importer::FilesParser do
-
   let(:fixture_path) { 'spec/fixtures' }
   let(:metadata_file_1) { "#{fixture_path}/directory/depth-1.csv" }
   let(:files_directory_1) { "#{fixture_path}/directory/depth-1" }

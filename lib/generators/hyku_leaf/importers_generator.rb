@@ -71,5 +71,4 @@ This works for Hyku and Hyrax apps.
     run 'chmod +x bin/import_files_to_existing_objects'
     run 'chmod +x bin/import_from_eprints_json'
   end
-
 end

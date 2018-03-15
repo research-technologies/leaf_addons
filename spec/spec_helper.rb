@@ -32,7 +32,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.expect_with :rspec do |c|
-    c.syntax = %i[should expect]
+    c.syntax = [:should, :expect]
   end
   config.before(:suite) do
   end

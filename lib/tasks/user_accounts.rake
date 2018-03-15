@@ -8,7 +8,7 @@ namespace :hyku_leaf do
       puts "rake ulcc:make_me_admin['person1@example.com person2@example.com']"
     else
       args[:email].split(' ').each do |admin|
-		  make_admin(admin) if validate_email(admin)
+        make_admin(admin) if validate_email(admin)
       end
     end
   end

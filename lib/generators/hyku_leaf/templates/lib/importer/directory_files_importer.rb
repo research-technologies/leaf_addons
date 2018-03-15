@@ -69,13 +69,13 @@ module Importer
       def write_to_files_list_csv(object_id, db_ids)
         uploads_csv = File.join(@files_directory, 'uploaded_files.csv')
         line = ''
-        db_ids.each do | id |
+        db_ids.each do |id|
           line += "#{object_id},#{id},#{Hyrax::UploadedFile.find_by_id(id)[:file]}\n"
         end
         if File.exist?(uploads_csv) && !File.read(uploads_csv).include?(line)
-          File.open(uploads_csv, 'a+') {|f| f << line}
+          File.open(uploads_csv, 'a+') { |f| f << line }
         else
-          File.open(uploads_csv, 'w') {|f| f << line}
+          File.open(uploads_csv, 'w') { |f| f << line }
         end
       end
   end

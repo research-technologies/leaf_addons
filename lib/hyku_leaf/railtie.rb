@@ -7,7 +7,7 @@ module HykuLeaf
     railtie_name :hyku_leaf
 
     rake_tasks do
-      load "tasks/user_accounts.rake"
+      load 'tasks/user_accounts.rake'
     end
   end
 end

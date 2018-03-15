@@ -1,121 +1,28 @@
-require: rubocop-rspec
+inherit_gem:
+  bixby: bixby_default.yml
+
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.4.1
-  DisplayCopNames: true
-  Include:
-    - '**/Rakefile'
   Exclude:
     - 'spec/test_app_templates/**/*.rb'
-    - 'lib/generators/hyku_leaf/**/*.rb'
-    - 'for_removal/**/*.rb'
 
-Bundler/DuplicatedGem:  # This doesn't work with engine_cart
-  Enabled: false
-
-Layout/IndentationConsistency:
-  EnforcedStyle: rails
-
-Lint/AmbiguousBlockAssociation:
-  Enabled: false
-
-Lint/ScriptPermission:
-  Enabled: false
-
-Metrics/LineLength:
-  Max: 200
-
-Metrics/AbcSize:
-  Max: 26
-
-Metrics/BlockLength:
-  ExcludedMethods: ['included']
+# engine_cart
+Bundler/DuplicatedGem:
   Exclude:
-    - 'hyku_leaf.gemspec'
-    - 'spec/**/*.rb'
-    - 'lib/tasks/user_accounts.rake'
+    - 'Gemfile'
 
-Metrics/MethodLength:
-  Max: 13
+# engine_cart
+Bundler/OrderedGems:
+  Exclude:
+    - 'Gemfile'
 
 RSpec/ExampleLength:
   Exclude:
     - 'spec/**/*.rb'
 
-Style/AsciiComments:
-  Enabled: false
-
-Style/CollectionMethods:
-  PreferredMethods:
-    collect: 'map'
-    collect!: 'map!'
-    inject: 'reduce'
-    detect: 'find'
-    find_all: 'select'
-
-Naming/FileName: # https://github.com/bbatsov/rubocop/issues/2973
-  Exclude:
-    - 'Gemfile'
-
-Style/SymbolArray:
-  Enabled: false
-
-Style/WordArray:
-  Enabled: false
-
-Style/RegexpLiteral:
-  Enabled: false
-
-Style/StringLiterals:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/NumericPredicate:
-  Enabled: false
-
-Style/SingleLineBlockParams:
-  Enabled: false
-
-Rails:
-  Enabled: true
-
-Rails/ApplicationJob:
-  Enabled: false
-
-Rails/ApplicationRecord:
-  Enabled: false
-
-# We define custom methods like `find_by_user_key`,
-# `find_by_created_date`, etc
-Rails/DynamicFindBy:
-  Enabled: false
-
 # By default RSpec/MessageSpies has the following:
-#   Prefer have_received for setting message expectations. Setup form as a spy using allow or instance_spy.
+# Prefer have_received for setting message expectations. Setup form as a spy using allow or instance_spy.
 # The default assumes EnforcedStyle is 'have_received'. Most of our specs are 'receive'
 RSpec/MessageSpies:
-  Enabled: false
-
-RSpec/ExpectActual:
-  Enabled: false
-
-RSpec/LetSetup:
-  Enabled: false
-
-RSpec/MessageExpectation:
-  Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false
-
-RSpec/NestedGroups:
-  Enabled: false
-
-RSpec/LeadingSubject:
   Enabled: false

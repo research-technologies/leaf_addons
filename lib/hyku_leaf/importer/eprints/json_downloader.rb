@@ -131,8 +131,6 @@ module HykuLeaf
           "#{dir}/#{docid}_#{download.to_s.split('/')[-1]}"
         end
 
-        # rubocop:disable Style/RescueStandardError
-
         # Do the download
         #
         # @param download [String] the uri to download
@@ -147,8 +145,6 @@ module HykuLeaf
           warn "Something went wrong when attempting to download #{download} to #{path} (#{$ERROR_INFO.message})"
           Rails.logger.warn "Something went wrong when attempting to download #{download} to #{path} (#{$ERROR_INFO.message})"
         end
-
-        # rubocop:enable Style/RescueStandardError
 
         # Create a directory for the downloaded files
         #
