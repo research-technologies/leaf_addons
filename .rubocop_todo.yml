@@ -196,6 +196,8 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
   Max: 68
+  Exclude:
+    - 'lib/tasks/user_accounts.rake'
 
 # Offense count: 78
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
