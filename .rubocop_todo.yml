@@ -175,7 +175,7 @@ Layout/TrailingBlankLines:
     - 'templates/controllers/hyku_leaf/invitations_controller.rb'
 
 # Offense count: 3
-Lint/RescueWithoutErrorClass:
+Style/RescueStandardError:
   Exclude:
     - 'lib/hyku_leaf/importer/directory_files_importer.rb'
     - 'lib/hyku_leaf/importer/eprints/json_files_processor.rb'
