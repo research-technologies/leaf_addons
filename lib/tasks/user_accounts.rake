@@ -8,7 +8,19 @@ namespace :hyku_leaf do
       puts "rake ulcc:make_me_admin['person1@example.com person2@example.com']"
     else
       args[:email].split(' ').each do |admin|
-		make_admin(admin) if validate_email(admin)
+		  make_admin(admin) if validate_email(admin)
+      end
+    end
+  end
+
+  desc "Invite a single user with no frills (no display name, no admin). Supply a space separated list, eg ['person1@example.com person2@example.com']."
+  task :invite_user, [:email] => [:environment] do |_t, args|
+    if args[:email].nil?
+      puts 'Supply a space separated list of email addresses, like this'
+      puts "rake ulcc:invite_users['person1@example.com person2@example.com']"
+    else
+      args[:email].split(' ').each do |invite|
+        invite_user(invite) if validate_email(invite)
       end
     end
   end
@@ -32,9 +44,9 @@ namespace :hyku_leaf do
     end
   end
 
-  # private
-
   # Make the user an administrator
+  #
+  # @param email [String] email address for the admin
   def make_admin(email)
     user = User.find_by(email: email.downcase)
     if user.nil?
@@ -68,7 +80,7 @@ namespace :hyku_leaf do
     users = CSV.read(csv)
     users.shift # skip header row
     users.each do |line|
-      process_user_line(line) if validate_email(line[0])
+      process_user_line(line)
     end
   end
 
@@ -76,9 +88,10 @@ namespace :hyku_leaf do
   #
   # @param line [Array] an array of data from the users csv
   def process_user_line(line)
+    return if line.blank?
     name = line[1].nil? ? nil : line[1].strip
     admin = true unless line[2].nil? && line[2] != "true"
-    invite_user(line[0].downcase.strip, name, admin)
+    invite_user(line[0].downcase.strip, name, admin) if validate_email(line[0])
   end
 
   # Check that the email is valid (ie. that it contains '@')
