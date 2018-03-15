@@ -31,7 +31,7 @@ end
 
 def load_rails
   puts 'Loading environment...'
-  require File.expand_path('../../config/environment', __FILE__)
+  require File.expand_path('../config/environment', __dir__)
   require 'importer'
   puts 'Starting import...'
 end

@@ -10,7 +10,7 @@ end
 require 'coveralls'
 Coveralls.wear!
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 # as of webmock v2 this has to go here, after load path and before other requires
 require 'webmock/rspec'
@@ -23,7 +23,7 @@ require 'byebug' unless ENV['TRAVIS']
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
-FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.definition_file_paths = [File.expand_path('factories', __dir__)]
 FactoryBot.find_definitions
 
 # require 'support/factory_bot'

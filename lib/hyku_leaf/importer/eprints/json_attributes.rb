@@ -6,8 +6,6 @@ module HykuLeaf
   module Importer
     module Eprints
       module JsonAttributes
-        # rubocop:disable Lint/RescueWithoutErrorClass
-
         # Build the attributes for passing to Fedora
 
         # @param eprint [Hash] json for a single eprint
@@ -17,12 +15,10 @@ module HykuLeaf
           attributes = special_attributes(eprint, attributes)
           attributes[:model] = find_model(eprint['type'])
           attributes
-        rescue
+        rescue StandardError
           warn("\nSomething went wrong when processing #{eprint['eprintid']} - skipping this line - check logs for details")
           Rails.logger.warn "Something went wrong with #{eprint['eprintid']} (#{$ERROR_INFO.message})"
         end
-
-        # rubocop:enable Lint/RescueWithoutErrorClass
 
         # Build the standard attributes (those that can be called with just the name, value and attributes)
 

@@ -64,9 +64,7 @@ module HykuLeaf
           visibility = 'restricted' if doc['security'].present? && doc['security'] != 'public'
           if doc['relation'].present?
             doc['relation'].each do |rel|
-              if rel['type'].include? 'isIndexCodesVersionOf'
-                visibility = 'restricted'
-              end
+              visibility = 'restricted' if rel['type'].include? 'isIndexCodesVersionOf'
             end
           end
           visibility
@@ -143,7 +141,7 @@ module HykuLeaf
           Rails.logger.info "Downloading #{download}"
           require 'open-uri'
           File.open(path, 'wb') do |contents|
-            contents << open(download, &:read)
+            contents << File.open(download, &:read)
           end
         rescue
           warn "Something went wrong when attempting to download #{download} to #{path} (#{$ERROR_INFO.message})"
