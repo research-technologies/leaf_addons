@@ -471,9 +471,7 @@ module HykuLeaf
         # @return [String] the padded identifier
         def make_identifier(eprintid)
           return eprintid if eprintid.to_s.length >= 9
-          identifier = eprintid.to_s
-          identifier += '0' while identifier.length < 9
-          identifier
+          eprintid.to_s.rjust(9, '0')
         end
       end
     end

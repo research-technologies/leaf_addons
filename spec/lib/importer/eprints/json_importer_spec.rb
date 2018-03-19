@@ -22,7 +22,7 @@ RSpec.describe Importer::Eprints::JsonImporter do
 
   it 'uses the published item factory, ie. the model is correctly set' do
     expect(Importer::Factory::PublishedWorkFactory).to receive(:new)
-      .with(hash_including(id: '628900000'))
+      .with(hash_including(id: '000006289'))
       .and_return(published_work_factory)
     expect(published_work_factory).to receive(:run)
     importer.import_all

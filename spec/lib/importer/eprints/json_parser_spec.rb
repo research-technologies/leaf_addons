@@ -21,7 +21,7 @@ RSpec.describe Importer::Eprints::JsonParser do
     it 'returns the full set of attributes for the fixture' do
       expect(parser.first).to eq(
         former_id: ["6289"],
-        id: "628900000",
+        id: "000006289",
         keyword: ["Building design", "Corridors"],
         publication_status: ["pub"],
         publisher: ["King Edward's Hospital Fund for London"],
@@ -59,13 +59,13 @@ RSpec.describe Importer::Eprints::JsonParser do
     it 'writes the downloaded_files.csv file' do
       parser_checksum.first
       expect(File).to be_exist('/tmp/downloaded_files.csv')
-      expect(File.read('/tmp/downloaded_files.csv')).to eq("628900000,1119_006289.txt,\n628900000,1120_006289.pdf,\n628900000,1119_indexcodes.txt,restricted\n")
+      expect(File.read('/tmp/downloaded_files.csv')).to eq("000006289,1119_006289.txt,\n000006289,1120_006289.pdf,\n000006289,1119_indexcodes.txt,restricted\n")
     end
 
     it 'writes the import_files.csv file' do
       parser_checksum.first
       expect(File).to be_exist('/tmp/import_files.csv')
-      expect(File.read('/tmp/import_files.csv')).to eq("628900000,6289\n")
+      expect(File.read('/tmp/import_files.csv')).to eq("000006289,6289\n")
     end
 
     after do
