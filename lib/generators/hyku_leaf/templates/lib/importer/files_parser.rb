@@ -51,7 +51,8 @@ module Importer
           i -= 1
         end
         # Reject directories. Once we reach the specified depth, we want files only.
-        Dir.glob(path).reject { |e| File.directory? e }
+        # Sort this list - filenames MUST adhere to alphabetical order
+        Dir.glob(path).sort.reject { |e| File.directory? e }
       end
 
       # Build an array of files
