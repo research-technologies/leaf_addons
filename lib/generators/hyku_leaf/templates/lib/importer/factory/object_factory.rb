@@ -1,3 +1,5 @@
+# This code is taken from https://github.com/samvera-labs/hyku; authored by the Hydra-in-a-Box Project (DPLA, DuraSpace, and Stanford University)
+
 require 'importer/log_subscriber'
 module Importer
   module Factory

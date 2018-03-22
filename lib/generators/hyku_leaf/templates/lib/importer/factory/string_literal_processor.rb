@@ -1,3 +1,5 @@
+# This code is taken from https://github.com/samvera-labs/hyku; authored by the Hydra-in-a-Box Project (DPLA, DuraSpace, and Stanford University)
+
 module Importer
   module Factory
     # Transform the attributes from the parser into basic string literals.
