@@ -44,7 +44,7 @@ namespace :hyku_leaf do
     end
   end
 
-  # Make the user an administrator
+  # Make the user an administrator. Works with Rolify (Hyku) and hydra-role-management.
   #
   # @param email [String] email address for the admin
   def make_admin(email)
@@ -52,7 +52,15 @@ namespace :hyku_leaf do
     if user.nil?
       puts "#{email} doesn't have a user account so cannot be made an admin."
     else
-      user.add_role :admin
+      if user.respond_to?(:add_role)
+        user.add_role :admin
+      else
+        admin = Role.create(name: "admin")
+        # if the role already exists, admin will be nil
+        admin = Role.find_by(name: 'admin') if admin.id.nil?
+        admin.users << user
+        admin.save
+      end
       puts "#{email} is now an admin."
     end
   end
