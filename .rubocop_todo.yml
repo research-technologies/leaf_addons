@@ -14,4 +14,4 @@ Metrics/MethodLength:
     - 'lib/generators/hyku_leaf/importers_generator.rb'
     - 'lib/generators/hyku_leaf/templates/lib/importer/directory_files_importer.rb'
     - 'lib/generators/hyku_leaf/templates/lib/importer/eprints/json_importer.rb'
-
+    - 'lib/tasks/user_accounts.rake'
