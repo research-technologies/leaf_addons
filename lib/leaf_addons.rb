@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module HykuLeaf
+module LeafAddons
   extend ActiveSupport::Autoload
-  require 'hyku_leaf/railtie' if defined?(Rails)
+  require 'leaf_addons/railtie' if defined?(Rails)
 
   eager_autoload do
     autoload :Importer

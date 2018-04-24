@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-describe HykuLeaf do
+describe LeafAddons do
   it 'has a version number' do
-    expect(HykuLeaf::VERSION).not_to be nil
+    expect(LeafAddons::VERSION).not_to be nil
   end
 end

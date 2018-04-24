@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HykuLeaf
+module LeafAddons
   module Importer
     extend ActiveSupport::Autoload
 

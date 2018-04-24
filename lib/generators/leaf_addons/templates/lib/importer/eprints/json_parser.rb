@@ -4,8 +4,8 @@ module Importer
   module Eprints
     class JsonParser
       include Enumerable
-      include HykuLeaf::Importer::Eprints::JsonAttributes
-      include HykuLeaf::Importer::Eprints::JsonDownloader
+      include LeafAddons::Importer::Eprints::JsonAttributes
+      include LeafAddons::Importer::Eprints::JsonDownloader
       # For locally overriden methods
       include Importer::Eprints::JsonAttributesOverrides
 

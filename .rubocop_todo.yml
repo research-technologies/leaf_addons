@@ -1,17 +1,17 @@
 Style/NumericPredicate:
   Exclude:
-    - 'lib/generators/hyku_leaf/templates/bin/import_files_to_existing_objects'
-    - 'lib/generators/hyku_leaf/templates/lib/importer/files_parser.rb'
+    - 'lib/generators/leaf_addons/templates/bin/import_files_to_existing_objects'
+    - 'lib/generators/leaf_addons/templates/lib/importer/files_parser.rb'
 
 Metrics/BlockLength:
   Exclude:
-    - 'hyku_leaf.gemspec'
+    - 'leaf_addons.gemspec'
     - 'spec/**/*.rb'
     - 'lib/tasks/user_accounts.rake'
 
 Metrics/MethodLength:
   Exclude:
-    - 'lib/generators/hyku_leaf/importers_generator.rb'
-    - 'lib/generators/hyku_leaf/templates/lib/importer/directory_files_importer.rb'
-    - 'lib/generators/hyku_leaf/templates/lib/importer/eprints/json_importer.rb'
+    - 'lib/generators/leaf_addons/importers_generator.rb'
+    - 'lib/generators/leaf_addons/templates/lib/importer/directory_files_importer.rb'
+    - 'lib/generators/leaf_addons/templates/lib/importer/eprints/json_importer.rb'
     - 'lib/tasks/user_accounts.rake'

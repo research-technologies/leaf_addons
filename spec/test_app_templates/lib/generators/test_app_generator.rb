@@ -41,11 +41,11 @@
           # end of methods running only on localhost
 
           # def install_engine
-          #   generate 'hyku_leaf:install'
+          #   generate 'leaf_addons:install'
           # end
 
           def install_eprints_importer
-            generate 'hyku_leaf:importers'
+            generate 'leaf_addons:importers'
           end
 
         end

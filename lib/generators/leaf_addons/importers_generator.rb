@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class HykuLeaf::ImportersGenerator < Rails::Generators::Base
+class LeafAddons::ImportersGenerator < Rails::Generators::Base
   source_root File.expand_path('../templates', __FILE__)
 
   desc '

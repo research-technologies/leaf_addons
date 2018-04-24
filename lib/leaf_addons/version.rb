@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-module HykuLeaf
+module LeafAddons
   VERSION = '0.1.0'.freeze
 end

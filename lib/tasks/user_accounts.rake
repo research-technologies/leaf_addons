@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-namespace :hyku_leaf do
+namespace :leaf_addons do
   desc "Make users administrators in Hyku. Supply a space separated list, eg ['person1@example.com person2@example.com']."
   task :make_me_admin, [:email] => [:environment] do |_t, args|
     if args[:email].nil?

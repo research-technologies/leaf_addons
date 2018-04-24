@@ -2,7 +2,7 @@
 
 # rubocop:disable Metrics/ModuleLength
 
-module HykuLeaf
+module LeafAddons
   module Importer
     module Eprints
       module JsonAttributes

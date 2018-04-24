@@ -4,16 +4,16 @@ lib = File.expand_path('lib', __dir__)
 
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'hyku_leaf/version'
+require 'leaf_addons/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'hyku_leaf'
-  spec.version       = HykuLeaf::VERSION
+  spec.name          = 'leaf_addons'
+  spec.version       = LeafAddons::VERSION
   spec.authors       = ['Julie Allinson']
   spec.email         = ['julie.allinson@london.ac.uk']
 
-  spec.summary       = 'HykuLeaf adds additional functionality to a Hyku application.'
-  spec.description   = 'HykuLeaf adds additional functionality to a Hyku application.'
+  spec.summary       = 'LeafAddons adds additional functionality to a Hyku or Hyrax application.'
+  spec.description   = 'LeafAddons adds additional functionality to a Hyku or Hyrax application.'
   spec.homepage      = 'https://github.com/geekscruff/dog_biscuits'
   spec.license       = 'APACHE-2.0'
 

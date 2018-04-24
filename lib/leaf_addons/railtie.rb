@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'hyku_leaf'
+require 'leaf_addons'
 require 'rails'
-module HykuLeaf
+module LeafAddons
   class Railtie < Rails::Railtie
-    railtie_name :hyku_leaf
+    railtie_name :leaf_addons
 
     rake_tasks do
       load 'tasks/user_accounts.rake'
