@@ -8,7 +8,7 @@
           # after setting up the application
 
           def install_hyrax
-            gem 'hyrax', '~> 2.0.0'
+            gem 'hyrax', '>= 2', '< 3'
             run 'bundle install'
             generate 'hyrax:install', '-f'
             rails_command 'db:migrate'

@@ -259,6 +259,26 @@ module LeafAddons
           attributes
         end
 
+        # Add event_dates to attributes
+        #
+        # @param val [String] the value
+        # @param attributes [Hash] hash of attributes to update
+        # @return [Hash] attributes
+        def event_dates(val, attributes)
+          attributes[:event_date] = [val.to_s]
+          attributes
+        end
+
+        # Add event_location to attributes
+        #
+        # @param val [String] the value
+        # @param attributes [Hash] hash of attributes to update
+        # @return [Hash] attributes
+        def event_location(val, attributes)
+          attributes[:event_location] = [val.to_s]
+          attributes
+        end
+
         # Add isbn to attributes
         #
         # @param val [String] the value
@@ -288,6 +308,26 @@ module LeafAddons
         # @return [Hash] attributes
         def keywords(val, attributes)
           attributes[:keyword] = val.split(',').collect(&:strip)
+          attributes
+        end
+
+        # Add latitude to attributes
+        #
+        # @param val [String] the value
+        # @param attributes [Hash] hash of attributes to update
+        # @return [Hash] attributes
+        def latitude(val, attributes)
+          attributes[:lat] = [val.to_s]
+          attributes
+        end
+
+        # Add longitude to attributes
+        #
+        # @param val [String] the value
+        # @param attributes [Hash] hash of attributes to update
+        # @return [Hash] attributes
+        def longitude(val, attributes)
+          attributes[:long] = [val.to_s]
           attributes
         end
 
@@ -331,6 +371,16 @@ module LeafAddons
           attributes
         end
 
+        # Add pagerange to attributes
+        #
+        # @param val [String] the value
+        # @param attributes [Hash] hash of attributes to update
+        # @return [Hash] attributes
+        def pagerange(val, attributes)
+          attributes[:pagination] = [val.to_s]
+          attributes
+        end
+
         # Add part to attributes
         #
         # @param val [String] the value
@@ -362,6 +412,16 @@ module LeafAddons
           else
             attributes[:resource_type] << find_type(val)
           end
+          attributes
+        end
+
+        # Add publication to attributes
+        #
+        # @param val [String] the value
+        # @param attributes [Hash] hash of attributes to update
+        # @return [Hash] attributes
+        def publication(val, attributes)
+          attributes[:part_of] = [val]
           attributes
         end
 
