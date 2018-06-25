@@ -6,6 +6,7 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   Exclude:
     - 'spec/test_app_templates/**/*.rb'
+    - 'lib/generators/leaf_addons/templates/bin/eprints_directory_csv_processor.rb'
 
 # engine_cart
 Bundler/DuplicatedGem:

@@ -37,7 +37,7 @@ This works for Hyku and Hyrax apps.
       injection = "    \nautoload :BaseFactory"
       injection += "    \nautoload :PublishedWorkFactory"
       injection += "    \nautoload :ConferenceItemFactory\n"
-	  injection += "    \nautoload :JournalArcticleFactory\n"
+      injection += "    \nautoload :JournalArcticleFactory\n"
 
       unless File.read(factory).include? 'PublishedWorkFactory'
         inject_into_file factory, after: "eager_autoload do\n" do
@@ -47,15 +47,13 @@ This works for Hyku and Hyrax apps.
     else
       copy_file 'lib/importer/factory.rb', 'lib/importer/factory.rb'
     end
-	directory 'lib/importer/factory/', 'lib/importer/factory/'
+    directory 'lib/importer/factory/', 'lib/importer/factory/'
   end
 
   def create_bin_files
+    directory 'bin', 'bin'
     bin_one = 'bin/import_files_to_existing_objects'
     bin_two = 'bin/import_from_eprints_json'
-
-    copy_file bin_one, bin_one
-    copy_file bin_two, bin_two
 
     # If we aren't in a Hyku app, remove the AccountElevator code
     if File.exist?('config/initializers/version.rb')
