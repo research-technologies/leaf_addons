@@ -264,7 +264,7 @@ module LeafAddons
         # @param val [String] the value
         # @param attributes [Hash] hash of attributes to update
         # @return [Hash] attributes
-        def department(val, attributes)
+        def divisions(val, attributes)
           attributes[:department] = []
           val.each do |v|
             attributes[:department] << v.to_s
