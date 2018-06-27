@@ -323,15 +323,20 @@ module LeafAddons
           attributes
         end
 
-        # TODO: lookup?
         # Add ispublished to attributes
         #
         # @param val [String] the value
         # @param attributes [Hash] hash of attributes to update
         # @return [Hash] attributes
         def ispublished(val, attributes)
-          # TODO: lookup
-          attributes[:publication_status] = [val]
+          attributes[:publication_status] = case val
+                                            when 'pub'
+                                              ['published']
+                                            when 'unpub'
+                                              ['unpublished']
+                                            else
+                                              [val.to_s]
+                                            end
           attributes
         end
 
@@ -481,9 +486,9 @@ module LeafAddons
         # @return [Hash] attributes
         def refereed(val, attributes)
           attributes[:refereed] = if val == 'TRUE'
-                                    [true]
+                                    ['Yes']
                                   else
-                                    [false]
+                                    ['No']
                                   end
           attributes
         end
