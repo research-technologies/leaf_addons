@@ -258,6 +258,20 @@ module LeafAddons
           attributes
         end
 
+        # Add divisions to attributes
+        # This will likely be overridden with a lookup
+        #
+        # @param val [String] the value
+        # @param attributes [Hash] hash of attributes to update
+        # @return [Hash] attributes
+        def department(val, attributes)
+          attributes[:department] = []
+          val.each do |v|
+            attributes[:department] << v.to_s
+          end
+          attributes
+        end
+
         # Add edition to attributes
         #
         # @param val [String] the value
@@ -485,6 +499,7 @@ module LeafAddons
         end
 
         # Add subjects to attributes
+        # This will likely be overridden with a lookup
         #
         # @param val [String] the value
         # @param attributes [Hash] hash of attributes to update
