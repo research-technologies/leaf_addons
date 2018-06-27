@@ -52,22 +52,42 @@ module LeafAddons
           attributes
         end
 
+        # rubocop:disable Metrics/CyclomaticComplexity
+        # rubocop:disable Metrics/MethodLength
+
         # Determine the model for each eprint['type']
+        # Supports ootb eprints types:
+        #   Article, Book, Monograph, Conference Item, Thesis,
+        #   Dataset, Experiment
+        # Everything else mapped to 'GenericWork'
         #
         # @param [String] the eprint type value
         # @return [String] the Model name
         def find_model(type)
           case type
-          when 'kfpub'
+          when 'article'
+            'JournalArticle'
+          when 'book_section'
             'PublishedWork'
           when 'monograph'
             'PublishedWork'
           when 'book'
             'PublishedWork'
+          when 'conference_item'
+            'ConferenceItem'
+          when 'thesis'
+            'Thesis'
+          when 'dataset'
+            'Dataset'
+          when 'experiment'
+            'Dataset'
           else
-            type.camelize
+            'GenericWork'
           end
         end
+
+        # rubocop:enable Metrics/CyclomaticComplexity
+        # rubocop:enable Metrics/MethodLength
 
         # Default mappings from EPrints to Hyku
 

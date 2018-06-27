@@ -5,11 +5,14 @@ module Importer
     extend ActiveSupport::Autoload
 
     eager_autoload do
-      autoload :ConferenceItemFactory
       autoload :ObjectFactory
       autoload :StringLiteralProcessor
+      autoload :ConferenceItemFactory
+      autoload :DataSetFactory
+      autoload :GenericWorkFactory
       autoload :JournalArticleFactory
       autoload :PublishedWorkFactory
+      autoload :ThesisFactory
       autoload :BaseFactory
     end
 
