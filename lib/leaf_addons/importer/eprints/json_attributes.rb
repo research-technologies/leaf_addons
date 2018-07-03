@@ -9,12 +9,12 @@ module LeafAddons
         # Build the attributes for passing to Fedora
 
         # @param eprint [Hash] json for a single eprint
-        # @return [Hash] attributes
-        def attributes(eprint)
-          attributes = standard_attributes(eprint)
-          attributes = special_attributes(eprint, attributes)
+        def create_attributes(eprint)
+          @attributes = {}
+          standard_attributes(eprint)
+          special_attributes(eprint)
           attributes[:model] = find_model(eprint['type'])
-          attributes
+          return attributes
         rescue StandardError
           warn("\nSomething went wrong when processing #{eprint['eprintid']} - skipping this line - check logs for details")
           Rails.logger.warn "Something went wrong with #{eprint['eprintid']} (#{$ERROR_INFO.message})"
@@ -23,33 +23,26 @@ module LeafAddons
         # Build the standard attributes (those that can be called with just the name, value and attributes)
 
         # @param eprint [Hash] json for a single eprint
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
         def standard_attributes(eprint)
-          attributes = {}
           eprint.each do |k, v|
             next if ignored.include?(k) || special.include?(k)
             if respond_to?(k.to_sym)
-              attributes = method(k).call(v, attributes)
+              method(k).call(v)
             else
               warn "\nNo method exists for field #{k}"
               Rails.logger.warn "No method for field #{k}"
             end
           end
-          attributes
         end
 
         # Build the special attributes (those that need more than just name and value)
         #
         # @param eprint [Hash] json for a single eprint
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def special_attributes(eprint, attributes)
+        def special_attributes(eprint)
           documents(eprint['documents'], eprint['eprintid']) unless eprint['documents'].nil?
           attributes.merge!(event_title(eprint['event_title'], eprint['event_type']))
           attributes.merge!(date(eprint['date'], eprint['date_type']))
           attributes.merge!(access_setting(eprint['metadata_visibility'], eprint['eprint_status']))
-          attributes
         end
 
         # rubocop:disable Metrics/CyclomaticComplexity
@@ -174,71 +167,57 @@ module LeafAddons
         # Add alt_title to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def alt_title(val, attributes)
+        def alt_title(val)
           if attributes[:title].blank?
             attributes[:title] = [val]
           else
             attributes[:title] << val
           end
-          attributes
         end
 
         # TODO: create 'organisation' and lookup
         # Add corp_creators to attributes
         #
         # @param val [Array] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def corp_creators(val, attributes)
+        def corp_creators(val)
           attributes[:creator] ||= []
           val.each do |corp|
             attributes[:creator] << corp
           end
           attributes.delete(:creator) if attributes[:creator] == []
-          attributes
         end
 
         # TODO: create 'person' and lookup
         # Add creators to attributes
         #
         # @param val [Array] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def creators(val, attributes)
+        def creators(val)
           attributes[:creator] ||= []
           val.each do |cr|
             name = make_name(cr)
             attributes[:creator] << name if name.present?
           end
           attributes.delete(:creator) if attributes[:creator] == []
-          attributes
         end
 
         # TODO: create 'person' and lookup
         # Add editors to attributes
         #
         # @param val [Array] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def editors(val, attributes)
+        def editors(val)
           attributes[:editor] ||= []
           val.each do |ed|
             name = make_name(ed)
             attributes[:editor] << name if name.present?
           end
           attributes.delete(:editor) if attributes[:editor] == []
-          attributes
         end
 
         # TODO: create 'organisation' and lookup
         # Add contributors to attributes
         #
         # @param val [Array] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def contributors(val, attributes)
+        def contributors(val)
           attributes[:contributor] ||= []
           val.each do |co|
             name = make_name(co)
@@ -251,9 +230,7 @@ module LeafAddons
         # Add abstract to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def abstract(val, attributes)
+        def abstract(val)
           attributes[:abstract] = [val]
           attributes
         end
@@ -262,73 +239,53 @@ module LeafAddons
         # This will likely be overridden with a lookup
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def divisions(val, attributes)
+        def divisions(val)
           attributes[:department] = []
           val.each do |v|
             attributes[:department] << v.to_s
           end
-          attributes
         end
 
         # Add edition to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def edition(val, attributes)
+        def edition(val)
           attributes[:edition] = [val.to_s]
-          attributes
         end
 
         # Add eprintid to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def eprintid(val, attributes)
+        def eprintid(val)
           attributes[:former_id] = [val.to_s]
           attributes[:id] = make_identifier(val)
-          attributes
         end
 
         # Add event_dates to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def event_dates(val, attributes)
+        def event_dates(val)
           attributes[:event_date] = [val.to_s]
-          attributes
         end
 
         # Add event_location to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def event_location(val, attributes)
+        def event_location(val)
           attributes[:event_location] = [val.to_s]
-          attributes
         end
 
         # Add isbn to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def isbn(val, attributes)
+        def isbn(val)
           attributes[:isbn] = [val.to_s]
-          attributes
         end
 
         # Add ispublished to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def ispublished(val, attributes)
+        def ispublished(val)
           attributes[:publication_status] = case val
                                             when 'pub'
                                               ['published']
@@ -337,131 +294,94 @@ module LeafAddons
                                             else
                                               [val.to_s]
                                             end
-          attributes
         end
 
         # Add keywords to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def keywords(val, attributes)
+        def keywords(val)
           attributes[:keyword] = val.split(',').collect(&:strip)
-          attributes
         end
 
         # Add latitude to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def latitude(val, attributes)
+        def latitude(val)
           attributes[:lat] = [val.to_s]
-          attributes
         end
 
         # Add longitude to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def longitude(val, attributes)
+        def longitude(val)
           attributes[:long] = [val.to_s]
-          attributes
         end
 
         # Add note to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def note(val, attributes)
+        def note(val)
           attributes[:note] = [val]
-          attributes
         end
 
         # Add number to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def number(val, attributes)
+        def number(val)
           attributes[:issue_number] = [val.to_s]
-          attributes
         end
 
         # Add official_url to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def official_url(val, attributes)
+        def official_url(val)
           attributes[:official_url] = [val.to_s]
-          attributes
         end
 
         # Add pages to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def pages(val, attributes)
+        def pages(val)
           attributes[:pagination] = [val.to_s]
-          attributes
         end
 
         # Add pagerange to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def pagerange(val, attributes)
+        def pagerange(val)
           attributes[:pagination] = [val.to_s]
-          attributes
         end
 
         # Add part to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def part(val, attributes)
+        def part(val)
           attributes[:part] = [val]
-          attributes
         end
 
         # Add place_of_pub to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def place_of_pub(val, attributes)
+        def place_of_pub(val)
           attributes[:place_of_publication] = [val]
-          attributes
         end
 
         # Add pres_type to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def pres_type(val, attributes)
+        def pres_type(val)
           if attributes[:resource_type].blank?
             attributes[:resource_type] = [find_type(val)]
           else
             attributes[:resource_type] << find_type(val)
           end
-          attributes
         end
 
         # Add publication to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def publication(val, attributes)
+        def publication(val)
           attributes[:part_of] = [val]
-          attributes
         end
 
         # TODO: ensure value is in resource types list
@@ -472,87 +392,66 @@ module LeafAddons
         # Add publisher to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def publisher(val, attributes)
+        def publisher(val)
           attributes[:publisher] = [val]
-          attributes
         end
 
         # Add refereed to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def refereed(val, attributes)
+        def refereed(val)
           attributes[:refereed] = if val == 'TRUE'
                                     ['Yes']
                                   else
                                     ['No']
                                   end
-          attributes
         end
 
         # Add series to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def series(val, attributes)
+        def series(val)
           attributes[:series] = [val.to_s]
-          attributes
         end
 
         # Add subjects to attributes
         # This will likely be overridden with a lookup
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def subjects(val, attributes)
+        def subjects(val)
           attributes[:subject] = []
           val.each do |v|
             attributes[:subject] << v.to_s
           end
-          attributes
         end
 
         # Add title to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def title(val, attributes)
+        def title(val)
           if attributes[:title].blank?
             attributes[:title] = [val]
           else
             attributes[:title] << val
           end
-          attributes
         end
 
         # Add type to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def type(val, attributes)
+        def type(val)
           if attributes[:resource_type].blank?
             attributes[:resource_type] = [find_type(val)]
           else
             attributes[:resource_type] << find_type(val)
           end
-          attributes
         end
 
         # Add volume to attributes
         #
         # @param val [String] the value
-        # @param attributes [Hash] hash of attributes to update
-        # @return [Hash] attributes
-        def volume(val, attributes)
+        def volume(val)
           attributes[:volume_number] = [val.to_s]
-          attributes
         end
 
         # Create a name string from parts

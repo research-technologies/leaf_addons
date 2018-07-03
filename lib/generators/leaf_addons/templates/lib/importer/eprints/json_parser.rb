@@ -9,6 +9,8 @@ module Importer
       # For locally overriden methods
       include Importer::Eprints::JsonAttributesOverrides
 
+      attr_accessor :attributes
+
       def initialize(file_name, downloads_directory)
         @file_name = file_name
         @downloads = downloads_directory
@@ -17,7 +19,7 @@ module Importer
       # @yieldparam attributes [Hash] the attributes from one eprint
       def each(&_block)
         JSON.parse(File.read(@file_name)).each do |eprint|
-          yield(attributes(eprint))
+          yield(create_attributes(eprint))
         end
       end
     end
