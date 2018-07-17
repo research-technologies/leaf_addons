@@ -22,7 +22,7 @@ module LeafAddons
         # Build the standard attributes (those that can be called with just the name, value and attributes)
 
         # @param eprint [Hash] json for a single eprint
-        def standard_attributes(eprint
+        def standard_attributes(eprint)
           eprint.each do |k, v|
             next if ignored.include?(k) || special.include?(k)
             if respond_to?(k.to_sym)
