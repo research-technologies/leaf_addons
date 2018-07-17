@@ -135,15 +135,15 @@ module LeafAddons
         #
         # @param download [String] the uri to download
         # @param path [String] the download path
-        def do_download(download, path)
-          Rails.logger.info "Downloading #{download}"
+        def do_download(download_url, path)
+          Rails.logger.info "Downloading #{download_url}"
           require 'open-uri'
           File.open(path, 'wb') do |contents|
-            contents << File.open(download, &:read)
+            contents << File.open(URI.escape(download_url), &:read)
           end
         rescue
-          warn "Something went wrong when attempting to download #{download} to #{path} (#{$ERROR_INFO.message})"
-          Rails.logger.warn "Something went wrong when attempting to download #{download} to #{path} (#{$ERROR_INFO.message})"
+          warn "Something went wrong when attempting to download #{download_url} to #{path} (#{$ERROR_INFO})"
+          Rails.logger.warn "Something went wrong when attempting to download #{download_url} to #{path} (#{$ERROR_INFO})"
         end
 
         # Create a directory for the downloaded files
