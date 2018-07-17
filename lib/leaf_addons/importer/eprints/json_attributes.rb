@@ -59,7 +59,7 @@ module LeafAddons
           case type
           when 'article'
             'JournalArticle'
-		  when 'book'
+          when 'book'
             'PublishedWork'
           when 'book_section'
             'PublishedWork'
