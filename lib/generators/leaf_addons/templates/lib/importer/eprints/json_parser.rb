@@ -19,7 +19,8 @@ module Importer
       # @yieldparam attributes [Hash] the attributes from one eprint
       def each(&_block)
         JSON.parse(File.read(@file_name)).each do |eprint|
-          yield(create_attributes(eprint))
+          create_attributes(eprint)
+          yield attributes
         end
       end
     end

@@ -17,6 +17,8 @@ module Importer
       def import_all
         count = 0
         parser.each do |attributes|
+          next if attributes.blank?
+          next if attributes[:model].blank?
           @model = attributes[:model]
           attributes.delete(:model)
           attributes[:edit_groups] = ['admin']

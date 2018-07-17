@@ -7,17 +7,16 @@ module LeafAddons
     module Eprints
       module JsonAttributes
         # Build the attributes for passing to Fedora
-
+        #
         # @param eprint [Hash] json for a single eprint
         def create_attributes(eprint)
           @attributes = {}
           standard_attributes(eprint)
           special_attributes(eprint)
           attributes[:model] = find_model(eprint['type'])
-          return attributes
         rescue StandardError
           warn("\nSomething went wrong when processing #{eprint['eprintid']} - skipping this line - check logs for details")
-          Rails.logger.warn "Something went wrong with #{eprint['eprintid']} (#{$ERROR_INFO.message})"
+          Rails.logger.warn "Something went wrong with #{eprint['eprintid']} (#{$ERROR_INFO})"
         end
 
         # Build the standard attributes (those that can be called with just the name, value and attributes)
@@ -60,11 +59,11 @@ module LeafAddons
           case type
           when 'article'
             'JournalArticle'
+          when 'book'
+            'PublishedWork'
           when 'book_section'
             'PublishedWork'
           when 'monograph'
-            'PublishedWork'
-          when 'book'
             'PublishedWork'
           when 'conference_item'
             'ConferenceItem'
