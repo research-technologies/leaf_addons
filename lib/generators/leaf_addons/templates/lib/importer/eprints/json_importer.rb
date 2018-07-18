@@ -27,9 +27,9 @@ module Importer
         end
         message = "Imported #{count} record(s).\n"
         message += "Files have been downloaded to #{@downloads}\n"
-        message += "A list of files with their visibility has been written to #{@downloads}/downloaded_files.csv\n"
-        message += "Import files with:\n"
-        message += "  bin/import_files_to_existing_objects HOSTNAME #{@downloads}/import_files.csv #{@downloads} 1\n"
+        message += "A list of files with their visibility has been written to #{@downloads}/downloaded_files.csv\n\n"
+        message += "Import files (on localhost) with:\n"
+        message += "  bin/import_files_to_existing_objects localhost #{@downloads}/import_files.csv #{@downloads} 1\n"
         message += "Changing visibility from default (open) will need to be done separately."
         message
       end

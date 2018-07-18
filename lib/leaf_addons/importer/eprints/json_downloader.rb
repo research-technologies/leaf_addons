@@ -71,11 +71,13 @@ module LeafAddons
         end
 
         # Verify the supplied md5 checksum value by computing the checksum of the given file
+        #  if no hash is supplied, return true
         #
         # @param md5 [String] md5 checksum
         # @param path [String] path to the file
         # @return [Boolean]
         def verify_checksum(md5, path)
+          return true if md5.blank?
           checksum = Digest::MD5.new
           IO.foreach(path) { |x| checksum << x }
           checksum.hexdigest == md5
@@ -113,13 +115,13 @@ module LeafAddons
           end
         end
 
-        # Construct the download url from the document hash
+        # Construct the download url from the document hash; URI.encode to deal with spaces
         #
         # @param document [Hash] the eprint document
         # @return [String] download url
         def setup_download_url(document)
           uri = document['uri'].split('/')
-          "#{uri[0]}//#{uri[2]}/#{document['eprintid']}/#{document['pos']}/#{document['main']}"
+          URI.escape("#{uri[0]}//#{uri[2]}/#{document['eprintid']}/#{document['pos']}/#{document['main']}")
         end
 
         # Construct the path for the download
@@ -138,8 +140,11 @@ module LeafAddons
         def do_download(download_url, path)
           Rails.logger.info "Downloading #{download_url}"
           require 'open-uri'
+          file = open(download_url)
           File.open(path, 'wb') do |contents|
-            contents << File.open(URI.escape(download_url), &:read)
+            file.each_line do |line|
+              contents << line
+            end
           end
         rescue
           warn "Something went wrong when attempting to download #{download_url} to #{path} (#{$ERROR_INFO})"
