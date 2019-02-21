@@ -1,14 +1,20 @@
 # frozen_string_literal: true
 
-require 'simplecov'
-
-SimpleCov.start do
-  add_filter '/spec/'
-  add_filter '/.internal_test_app'
+def coverage_needed?
+  ENV['COVERAGE'] || ENV['TRAVIS']
 end
 
-require 'coveralls'
-Coveralls.wear!
+if coverage_needed?
+  require 'simplecov'
+
+  SimpleCov.start do
+    add_filter '/spec/'
+    add_filter '/.internal_test_app'
+  end
+
+  require 'coveralls'
+  Coveralls.wear!
+end
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 

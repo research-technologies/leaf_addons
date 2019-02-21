@@ -1,0 +1,17 @@
+---
+en:
+  coversheet:
+    url: URL
+    author_title: Author and title
+    abstract: Abstract
+    type: Type
+    publication_status: Publication status
+    license: License
+    citation: To cite this version
+    available_url: Available at
+    official_url: Publisher's URL
+    doi: DOI
+    publisher: Publisher
+    submitted_date: Date submitted
+    copyright_statement: Copyright statement
+    copyright_statement_text: Copyright is retained by the author. Terms and conditions for use of this material are defined in the User Deposit Agreement.
