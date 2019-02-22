@@ -5,7 +5,7 @@ namespace :leaf_addons do
   task :make_me_admin, [:email] => [:environment] do |_t, args|
     if args[:email].nil?
       puts 'Supply a space separated list of email addresses, like this'
-      puts "rake ulcc:make_me_admin['person1@example.com person2@example.com']"
+      puts "rake leaf_addons:make_me_admin['person1@example.com person2@example.com']"
     else
       args[:email].split(' ').each do |admin|
         make_admin(admin) if validate_email(admin)
@@ -17,7 +17,7 @@ namespace :leaf_addons do
   task :invite_user, [:email] => [:environment] do |_t, args|
     if args[:email].nil?
       puts 'Supply a space separated list of email addresses, like this'
-      puts "rake ulcc:invite_users['person1@example.com person2@example.com']"
+      puts "rake leaf_addons:invite_users['person1@example.com person2@example.com']"
     else
       args[:email].split(' ').each do |invite|
         invite_user(invite) if validate_email(invite)
@@ -31,7 +31,7 @@ namespace :leaf_addons do
   task :invite_users, [:path] => [:environment] do |_t, args|
     if args[:path].nil?
       puts 'Supply the path to a csv file, like this'
-      puts "rake ulcc:invite_users['/tmp/my_file.csv']"
+      puts "rake leaf_addons:invite_users['/tmp/my_file.csv']"
       puts "the CSV file must contain a header row and three columns: email, display name, admin"
       puts "the admin column should contain the word true to indicate that the given user should be an admin"
     else
