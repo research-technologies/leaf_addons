@@ -89,6 +89,7 @@ module LeafAddons
 
     # can't guarantee order, so just take the first abstract
     def abstract(label)
+      return if work.abstract.first.blank?
       coversheet.text label.to_s
       coversheet.move_down LeafAddons.config.coversheet_spaces[:small]
       coversheet.indent LeafAddons.config.coversheet_indent, LeafAddons.config.coversheet_indent do
