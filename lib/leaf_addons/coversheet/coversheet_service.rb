@@ -45,9 +45,15 @@ module LeafAddons
       pdf = CombinePDF.new
       pdf << CombinePDF.parse(coversheet.render)
       pdf << CombinePDF.load(file_path) unless file_path.nil?
-      pdf << CombinePDF.parse(Net::HTTP.get_response(URI.parse(file_url)).body) unless file_url.nil?
+      pdf << CombinePDF.parse(get_fedora_uri) unless file_url.nil?
       pdf.save pdf_path
       pdf_path
+    end
+    
+    def get_fedora_uri
+      Faraday.new(:url => URI.parse(file_url)) do |faraday|
+        faraday.basic_auth(ActiveFedora.fedora_config.credentials[:user], ActiveFedora.fedora_config.credentials[:password])
+      end.body
     end
 
     def logo
