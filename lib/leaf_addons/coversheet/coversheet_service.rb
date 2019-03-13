@@ -19,7 +19,7 @@ module LeafAddons
         true
       elsif object.original_file.mime_type == 'application/pdf'
         @file_path = nil
-        @file_url = object.original_file.uri.to_s
+        @file_url = object.original_file.uri
         true
       else
         false
@@ -45,14 +45,16 @@ module LeafAddons
       pdf = CombinePDF.new
       pdf << CombinePDF.parse(coversheet.render)
       pdf << CombinePDF.load(file_path) unless file_path.nil?
-      pdf << CombinePDF.parse(fedora_uri) unless file_url.nil?
+      pdf << CombinePDF.parse(http_request(file_url)) unless file_url.blank?
       pdf.save pdf_path
       pdf_path
     end
 
-    def fedora_uri
-      Faraday.new(url: URI.parse(file_url)) do |faraday|
-        faraday.basic_auth(ActiveFedora.fedora_config.credentials[:user], ActiveFedora.fedora_config.credentials[:password])
+    def http_request(uri)
+      Net::HTTP.start(uri.host, uri.port) do |http|
+        req = Net::HTTP::Get.new(uri.request_uri)
+        req.basic_auth ActiveFedora.fedora_config.credentials[:user], ActiveFedora.fedora_config.credentials[:password]
+        http.request req
       end.body
     end
 
