@@ -7,6 +7,8 @@ module PrependDownloadsController
   def load_service_file
     c = LeafAddons::CoversheetService.new(asset)
     c.with_coversheet if c.coversheetable?
+  rescue StandardError => e
+    Rails.logger.error(e.message)
   end
 
   # override method - retrieve the coversheeted file if available
