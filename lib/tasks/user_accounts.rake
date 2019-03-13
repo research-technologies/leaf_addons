@@ -13,11 +13,13 @@ namespace :leaf_addons do
     end
   end
   
+  desc "Create an admin user: leaf_addons[email, password]"
   task :create_admin_user, [:email, :password] => :environment do |task, args|
     User.where(email: args[:email]).first_or_create!(password: args[:password]) if validate_email(invite)
     make_admin(args[:email]) if validate_email(invite)
   end
   
+  desc "Create a user: leaf_addons[email, password]"
   task :create_user, [:email, :password] => :environment do |task, args|
     User.where(email: args[:email]).first_or_create!(password: args[:password]) if validate_email(invite)
   end
