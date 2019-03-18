@@ -12,6 +12,15 @@ namespace :leaf_addons do
       end
     end
   end
+  
+  task :create_admin_user, [:email, :password] => :environment do |task, args|
+    User.where(email: args[:email]).first_or_create!(password: args[:password]) if validate_email(invite)
+    make_admin(args[:email]) if validate_email(invite)
+  end
+  
+  task :create_user, [:email, :password] => :environment do |task, args|
+    User.where(email: args[:email]).first_or_create!(password: args[:password]) if validate_email(invite)
+  end
 
   desc "Invite a single user with no frills (no display name, no admin). Supply a space separated list, eg ['person1@example.com person2@example.com']."
   task :invite_user, [:email] => [:environment] do |_t, args|
