@@ -15,13 +15,13 @@ namespace :leaf_addons do
 
   desc "Create an admin user: leaf_addons[email, password]"
   task :create_admin_user, [:email, :password] => :environment do |_task, args|
-    User.where(email: args[:email]).first_or_create!(password: args[:password]) if validate_email(invite)
-    make_admin(args[:email]) if validate_email(invite)
+    User.where(email: args[:email]).first_or_create!(password: args[:password]) if validate_email(args[:email])
+    make_admin(args[:email]) if validate_email(args[:email])
   end
 
   desc "Create a user: leaf_addons[email, password]"
   task :create_user, [:email, :password] => :environment do |_task, args|
-    User.where(email: args[:email]).first_or_create!(password: args[:password]) if validate_email(invite)
+    User.where(email: args[:email]).first_or_create!(password: args[:password]) if validate_email(args[:email])
   end
 
   desc "Invite a single user with no frills (no display name, no admin). Supply a space separated list, eg ['person1@example.com person2@example.com']."
