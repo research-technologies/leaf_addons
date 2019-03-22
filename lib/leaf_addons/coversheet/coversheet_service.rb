@@ -98,7 +98,7 @@ module LeafAddons
 
     def year(label)
       y = citation_object.citation.data.first[:issued]
-      return if y.blank?
+      return unless y.is_a? CiteProc::Date
       coversheet.text "#{label}#{y}"
       coversheet.move_down LeafAddons.config.coversheet_spaces[LeafAddons.config.coversheet_blocks['year'][:space]]
     end
