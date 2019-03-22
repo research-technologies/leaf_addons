@@ -46,6 +46,7 @@ module LeafAddons
       @coversheet_blocks ||= {
         'url' => { label: false, space: :large },
         'author_title' => { label: false, space: :large },
+        'date_published' => { label: false, space: :small },
         'type' => { label: false, space: :small },
         'publication_status' => { label: true, space: :small, join: ', ' },
         'license' => { label: true, space: :small, join: ', ' },

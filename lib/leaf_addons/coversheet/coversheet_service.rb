@@ -1,13 +1,14 @@
 module LeafAddons
   # rubocop:disable Metrics/ClassLength
   class CoversheetService
-    attr_reader :object, :file_path, :work, :file_url
+    attr_reader :object, :file_path, :work, :file_url, :citation_object
     attr_accessor :coversheet
 
     def initialize(object)
       @object = object
       @work = object.parent if object.is_a?(FileSet)
       @file_path = CoversheetDerivativePath.derivative_path_for_reference(object, 'service_file') if object.is_a?(FileSet)
+      @citation_object = CitationService.new(work)
     end
 
     # Can this FileSet have a coversheet added?
@@ -94,6 +95,13 @@ module LeafAddons
       coversheet.text "#{label}#{work.creator.join(',')}. <i>#{work.title.join(':')}.</i>", inline_format: true
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
     end
+    
+    def year(label)
+      y = citation_object.citation.data.first[:issued]
+      return if y.blank?
+      coversheet.text "#{label}#{y.to_s}"
+      coversheet.move_down LeafAddons.config.coversheet_spaces[:year]
+    end
 
     # can't guarantee order, so just take the first abstract
     def abstract(label)
@@ -139,12 +147,8 @@ module LeafAddons
       coversheet.text label
       coversheet.move_down LeafAddons.config.coversheet_spaces[:small]
       coversheet.indent LeafAddons.config.coversheet_indent, LeafAddons.config.coversheet_indent do
-        coversheet.text build_citation, inline_format: true
+        coversheet.text citation_object.render.join('; '), inline_format: true
       end
-    end
-
-    def build_citation
-      CitationService.new(work).render.join('; ')
     end
 
     # rubocop:disable Rails/TimeZone
