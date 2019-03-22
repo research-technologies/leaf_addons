@@ -95,11 +95,11 @@ module LeafAddons
       coversheet.text "#{label}#{work.creator.join(',')}. <i>#{work.title.join(':')}.</i>", inline_format: true
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
     end
-    
+
     def year(label)
       y = citation_object.citation.data.first[:issued]
       return if y.blank?
-      coversheet.text "#{label}#{y.to_s}"
+      coversheet.text "#{label}#{y}"
       coversheet.move_down LeafAddons.config.coversheet_spaces[:year]
     end
 

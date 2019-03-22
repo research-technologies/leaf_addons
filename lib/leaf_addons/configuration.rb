@@ -46,7 +46,7 @@ module LeafAddons
       @coversheet_blocks ||= {
         'url' => { label: false, space: :large },
         'author_title' => { label: false, space: :large },
-        'date_published' => { label: false, space: :small },
+        'year' => { label: false, space: :small },
         'type' => { label: false, space: :small },
         'publication_status' => { label: true, space: :small, join: ', ' },
         'license' => { label: true, space: :small, join: ', ' },
@@ -65,7 +65,7 @@ module LeafAddons
 
     attr_writer :coversheet_blocks_in_order
     def coversheet_blocks_in_order
-      @coversheet_blocks_in_order ||= %w[url author_title type publication_status license abstract citation available_url official_url doi publisher submitted_date copyright_statement]
+      @coversheet_blocks_in_order ||= %w[url author_title year type publication_status license abstract citation available_url official_url doi publisher submitted_date copyright_statement]
     end
 
     attr_writer :coversheet_image
