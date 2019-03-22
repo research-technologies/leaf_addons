@@ -73,8 +73,8 @@ LeafAddons.config do |config|
   # config.coversheet_indent = 20
   
   # Configure label style
-  # config.coversheet_label_bold = false
-  # config.coversheet_label_italic = false
+  # config.coversheet_labels_bold = false
+  # config.coversheet_labels_italic = false
 
   # Configure the margins, supply one or more values
   #  [50] set all to 50

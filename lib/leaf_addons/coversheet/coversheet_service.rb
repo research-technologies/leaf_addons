@@ -157,7 +157,7 @@ module LeafAddons
     # rubocop:disable Rails/TimeZone
     def submitted_date(label)
       d = DateTime.parse(work.date_uploaded.to_s)
-      coversheet.text "#{label}#{d.to_date}"
+      coversheet.text "#{label}#{d.to_date}", inline_format: true
     rescue ArgumentError => e
       Rails.logger.error(e)
     end
