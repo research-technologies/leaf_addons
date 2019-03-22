@@ -32,6 +32,7 @@ LeafAddons.config do |config|
   # config.coversheet_blocks = {
   #   'url' => { label: false, space: :large },
   #   'author_title' => { label: false, space: :large },
+  #   'year' => { label: false, space: :small },
   #   'type' => { label: false, space: :small },
   #   'publication_status' => { attribute: 'publication_status', label: true, space: :small, join: ', ' },
   #   'license' => { label: true, space: :small, join: ', ' },
@@ -47,7 +48,7 @@ LeafAddons.config do |config|
 
   # Defines the order of blocks, remove blocks from this list that are not wanted
   #   to add new block methods (eg. with prepend), add them in here too
-  # config.coversheet_blocks_in_order = %w[url author_title type publication_status license abstract citation available_url official_url doi publisher submitted_date copyright_statement]
+  # config.coversheet_blocks_in_order = %w[url author_title year type publication_status license abstract citation available_url official_url doi publisher submitted_date copyright_statement]
 
   # Set the banner image to an image location
   #   to use a URL, wrap it in open('http://the_url')
@@ -70,6 +71,10 @@ LeafAddons.config do |config|
 
   # Configure the indent size
   # config.coversheet_indent = 20
+  
+  # Configure label style
+  # config.coversheet_label_bold = false
+  # config.coversheet_label_italic = false
 
   # Configure the margins, supply one or more values
   #  [50] set all to 50

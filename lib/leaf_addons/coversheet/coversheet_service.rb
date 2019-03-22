@@ -87,7 +87,10 @@ module LeafAddons
 
     def label(block_name, label_me)
       return '' if label_me.blank?
-      "#{I18n.t('coversheet.' + block_name)}: " # TODO: get from locales
+      l = "#{I18n.t('coversheet.' + block_name)}: "
+      l = "<b>#{l}</b>" if LeafAddons.config.coversheet_labels_bold == true
+      l = "<i>#{l}</i>" if LeafAddons.config.coversheet_labels_italic == true
+      l
     end
 
     def author_title(label)
@@ -99,14 +102,14 @@ module LeafAddons
     def year(label)
       y = citation_object.citation.data.first[:issued]
       return unless y.is_a? CiteProc::Date
-      coversheet.text "#{label}#{y}"
+      coversheet.text "#{label}#{y}", inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[LeafAddons.config.coversheet_blocks['year'][:space]]
     end
 
     # can't guarantee order, so just take the first abstract
     def abstract(label)
       return if work.abstract.first.blank?
-      coversheet.text label.to_s
+      coversheet.text label.to_s, inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[:small]
       coversheet.indent LeafAddons.config.coversheet_indent, LeafAddons.config.coversheet_indent do
         coversheet.text work.abstract.first.to_s
@@ -124,7 +127,7 @@ module LeafAddons
     end
 
     def publication_status(label)
-      coversheet.text "#{label}#{work.publication_status.map { |l| AuthorityService::PublicationStatusesService.new.label(l) }.join(LeafAddons.config.coversheet_blocks['license'][:join])}"
+      coversheet.text "#{label}#{work.publication_status.map { |l| AuthorityService::PublicationStatusesService.new.label(l) }.join(LeafAddons.config.coversheet_blocks['license'][:join])}", inline_format: true
     rescue
       work.publication_status.join(LeafAddons.config.coversheet_blocks['publication_status'][:join])
     end
@@ -144,7 +147,7 @@ module LeafAddons
     end
 
     def citation(label)
-      coversheet.text label
+      coversheet.text label, inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[:small]
       coversheet.indent LeafAddons.config.coversheet_indent, LeafAddons.config.coversheet_indent do
         coversheet.text citation_object.render.join('; '), inline_format: true
