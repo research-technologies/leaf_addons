@@ -100,7 +100,7 @@ module LeafAddons
       y = citation_object.citation.data.first[:issued]
       return if y.blank?
       coversheet.text "#{label}#{y}"
-      coversheet.move_down LeafAddons.config.coversheet_spaces[:year]
+      coversheet.move_down LeafAddons.config.coversheet_spaces[LeafAddons.config.coversheet_blocks['year'][:space]]
     end
 
     # can't guarantee order, so just take the first abstract
