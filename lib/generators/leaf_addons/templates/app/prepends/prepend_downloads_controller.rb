@@ -2,11 +2,13 @@
 # Prepend for Hyrax::DownloadsController
 
 module PrependDownloadsController
+  attr_accessor :coversheet
+  
   # Create coversheet file if file is coversheetable
   # new method
   def load_service_file
-    c = LeafAddons::CoversheetService.new(asset)
-    c.with_coversheet if c.coversheetable?
+    @coversheet = LeafAddons::CoversheetService.new(asset)
+    coversheet.with_coversheet if coversheet.coversheetable?
   rescue StandardError => e
     Rails.logger.error(e.message)
   end
