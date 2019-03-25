@@ -3,7 +3,7 @@
 
 module PrependDownloadsController
   attr_accessor :coversheet
-  
+
   # Create coversheet file if file is coversheetable
   # new method
   def load_service_file
@@ -33,7 +33,7 @@ module PrependDownloadsController
   # override method
   def local_file_name
     if File.basename(file).include? 'service_file'
-      params[:filename] || (asset.respond_to?(:label) && asset.label.split('.').first + '.pdf')
+      custom_file_name || params[:filename] || (asset.respond_to?(:label) && asset.label.split('.').first + '.pdf')
     else
       params[:filename] || File.basename(file) || (asset.respond_to?(:label) && asset.label)
     end
@@ -41,4 +41,9 @@ module PrependDownloadsController
 
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable PerceivedComplexity
+
+  # override this to supply different download file_name
+  def custom_file_name
+    nil
+  end
 end

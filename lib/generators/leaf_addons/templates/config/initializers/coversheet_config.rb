@@ -71,7 +71,7 @@ LeafAddons.config do |config|
 
   # Configure the indent size
   # config.coversheet_indent = 20
-  
+
   # Configure label style
   # config.coversheet_labels_bold = false
   # config.coversheet_labels_italic = false

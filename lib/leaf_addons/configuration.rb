@@ -97,12 +97,12 @@ module LeafAddons
     def coversheet_indent
       @coversheet_indent ||= 20
     end
-    
+
     attr_writer :coversheet_labels_bold
     def coversheet_labels_bold
       @coversheet_labels_bold ||= false
     end
-    
+
     attr_writer :coversheet_labels_italic
     def coversheet_labels_italic
       @coversheet_labels_italic ||= false
