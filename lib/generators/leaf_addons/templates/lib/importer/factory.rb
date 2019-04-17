@@ -8,7 +8,7 @@ module Importer
       autoload :ObjectFactory
       autoload :StringLiteralProcessor
       autoload :ConferenceItemFactory
-      autoload :DataSetFactory
+      autoload :DatasetFactory
       autoload :GenericWorkFactory
       autoload :JournalArticleFactory
       autoload :PublishedWorkFactory
