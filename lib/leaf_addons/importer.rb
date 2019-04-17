@@ -5,6 +5,7 @@ module LeafAddons
     extend ActiveSupport::Autoload
 
     autoload :Eprints
+    autoload :Marc
     autoload :Factory
   end
 end

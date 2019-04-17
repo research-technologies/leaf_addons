@@ -24,6 +24,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'hyrax', '>= 2', '< 3'
+  spec.add_dependency 'marc'
+  spec.add_dependency 'dog_biscuits'
 
   spec.add_development_dependency 'bixby', '~> 1.0.0'
   spec.add_development_dependency 'byebug'

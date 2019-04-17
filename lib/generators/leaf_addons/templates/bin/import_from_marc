@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+def validate_hostname!(hostname)
+  return if hostname
+  usage
+  warn 'Please provide the hostname to import to.'
+  exit(1)
+end
+
+def validate_marc_file!(marc_file)
+  return if marc_file && File.exist?(marc_file)
+  usage
+  warn 'Please provide a metadata file to import.'
+  exit(1)
+end
+
+def load_rails
+  warn 'Loading environment...'
+  require File.expand_path('../config/environment', __dir__)
+  require 'importer'
+  puts 'Starting import...'
+end
+
+def main(hostname, marc_file)
+  validate_hostname!(hostname)
+  validate_marc_file!(marc_file)
+  load_rails
+
+  AccountElevator.switch!(hostname)
+  size = Importer::Marc::MarcImporter.new(marc_file).import_all
+
+  warn size
+end
+
+def logger
+  Rails.logger
+end
+
+def usage
+  warn "Usage: #{$PROGRAM_NAME} <hostname> <marc_file>"
+end
+
+main(ARGV[0], ARGV[1])
