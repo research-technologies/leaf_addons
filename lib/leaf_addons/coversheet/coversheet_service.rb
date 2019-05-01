@@ -34,11 +34,14 @@ module LeafAddons
     end
 
     def generate
-      @coversheet = Prawn::Document.new(page_size: LeafAddons.config.coversheet_page_size, margin: LeafAddons.config.coversheet_margin)
+      @coversheet = Prawn::Document.new(page_size: LeafAddons.config.coversheet_page_size,
+                                        margin: LeafAddons.config.coversheet_margin)
       image
       coversheet.font LeafAddons.config.coversheet_font
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
-      LeafAddons.config.coversheet_blocks_in_order.each { |block| render(block, LeafAddons.config.coversheet_blocks[block]) if respond_to?(block) }
+      LeafAddons.config.coversheet_blocks_in_order.each do |block|
+        render(block, LeafAddons.config.coversheet_blocks[block]) if respond_to?(block)
+      end
     end
 
     def combine
@@ -127,7 +130,9 @@ module LeafAddons
     end
 
     def publication_status(label)
-      coversheet.text "#{label}#{work.publication_status.map { |l| AuthorityService::PublicationStatusesService.new.label(l) }.join(LeafAddons.config.coversheet_blocks['license'][:join])}", inline_format: true
+      coversheet.text "#{label}#{work.publication_status.map do |l|
+        AuthorityService::PublicationStatusesService.new.label(l)
+      end.join(LeafAddons.config.coversheet_blocks['license'][:join])}", inline_format: true
     rescue
       work.publication_status.join(LeafAddons.config.coversheet_blocks['publication_status'][:join])
     end

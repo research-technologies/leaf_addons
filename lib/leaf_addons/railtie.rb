@@ -7,7 +7,9 @@ module LeafAddons
     railtie_name :leaf_addons
 
     rake_tasks do
-      load 'tasks/user_accounts.rake'
+      load 'tasks/users.rake'
+      load 'tasks/db.rake'
+      load 'tasks/utility.rake'
     end
   end
 end
