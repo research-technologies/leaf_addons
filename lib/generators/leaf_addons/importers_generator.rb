@@ -19,6 +19,7 @@ This works for Hyku and Hyrax apps.
       injection += "\n  autoload :DirectoryFilesImporter"
       injection += "\n  autoload :Factory\n"
       injection += "\n  autoload :FilesParser\n"
+      injection += "\n  autoload :Marc"
 
       unless File.read(importer).include? injection
         inject_into_file importer, after: "extend ActiveSupport::Autoload" do
@@ -38,6 +39,7 @@ This works for Hyku and Hyrax apps.
       injection += "    \nautoload :PublishedWorkFactory"
       injection += "    \nautoload :ConferenceItemFactory\n"
       injection += "    \nautoload :JournalArcticleFactory\n"
+      injection += "    \nautoload :Dataset\n"
 
       unless File.read(factory).include? 'PublishedWorkFactory'
         inject_into_file factory, after: "eager_autoload do\n" do
@@ -54,19 +56,23 @@ This works for Hyku and Hyrax apps.
     directory 'bin', 'bin'
     bin_one = 'bin/import_files_to_existing_objects'
     bin_two = 'bin/import_from_eprints_json'
+    bin_three = 'bin/import_from_marc'
 
     # If we aren't in a Hyku app, remove the AccountElevator code
     if File.exist?('config/initializers/version.rb')
       unless File.read('config/initializers/version.rb').include? 'Hyku'
         gsub_file bin_one, /AccountElevator.switch/, "# AccountElevator.switch"
         gsub_file bin_two, /AccountElevator.switch/, "# AccountElevator.switch"
+        gsub_file bin_three, /AccountElevator.switch/, "# AccountElevator.switch"
       end
     else
       gsub_file bin_one, /AccountElevator.switch/, "# AccountElevator.switch"
       gsub_file bin_two, /AccountElevator.switch/, "# AccountElevator.switch"
+      gsub_file bin_three, /AccountElevator.switch/, "# AccountElevator.switch"
     end
 
     run 'chmod +x bin/import_files_to_existing_objects'
     run 'chmod +x bin/import_from_eprints_json'
+    run 'chmod +x bin/import_from_marc'
   end
 end

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe LeafAddons::CoversheetService do
   let(:cover) { described_class.new(file_set) }
-  let(:file_set) { instance_double(FileSet) }
+  let(:file_set) { FactoryBot.create(:file_set) } # let(:file_set) { instance_double(FileSet) }
   let(:book) { FactoryBot.create(:published_work) }
   let(:original_file) { instance_double(Hydra::PCDM::File) }
   let(:pdf) { 'spec/fixtures/testfile.pdf' }
@@ -48,12 +48,14 @@ RSpec.describe LeafAddons::CoversheetService do
 
   describe '#with_coversheet' do
     it 'creates a file with the coversheet' do
+      allow(file_set).to receive(:parent).and_return(book)
+      allow(LeafAddons::CoversheetDerivativePath).to receive(:derivative_path_for_reference).with(file_set, 'service_file').and_return(pdf)
+
       allow(cover).to receive(:file_path).and_return(pdf)
       allow(cover).to receive(:coversheetable?).and_return(true)
-      allow(LeafAddons::CoversheetDerivativePath).to receive(:derivative_path_for_reference).with(file_set, 'service_file').and_return(pdf)
       allow(cover).to receive(:logo).and_return('spec/fixtures/coversheet_logo.png')
       allow(cover).to receive(:work).and_return(book)
-      allow(file_set).to receive(:id).and_return('file_set_id')
+
       allow(book).to receive_messages(
         creator: [],
         title: [],
@@ -66,6 +68,7 @@ RSpec.describe LeafAddons::CoversheetService do
         publisher: [],
         date_uploaded: nil
       )
+
       cover.with_coversheet
 
       expect(File.exist?('spec/fixtures/testfile_withcover.pdf')).to eq(true)

@@ -299,6 +299,7 @@ module LeafAddons
         #
         # @param val [String] the value
         def keywords(val)
+          val = val.join(',') if val.is_a?(Array)
           attributes[:keyword] = val.split(',').collect(&:strip)
         end
 

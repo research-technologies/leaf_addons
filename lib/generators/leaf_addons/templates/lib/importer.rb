@@ -7,5 +7,6 @@ module Importer
     autoload :DirectoryFilesImporter
     autoload :FilesParser
     autoload :Factory
+    autoload :Marc
   end
 end

@@ -6,8 +6,10 @@ module LeafAddons
 
     def initialize(object)
       @object = object
-      @work = object.parent if object.is_a?(FileSet)
-      @file_path = CoversheetDerivativePath.derivative_path_for_reference(object, 'service_file') if object.is_a?(FileSet)
+      if object.is_a?(FileSet)
+        @work = object.parent
+        @file_path = CoversheetDerivativePath.derivative_path_for_reference(object, 'service_file')
+      end
       @citation_object = CitationService.new(work)
     end
 
