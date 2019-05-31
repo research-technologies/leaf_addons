@@ -13,12 +13,13 @@ LeafAddons provide additional functionality for Hyrax or Hyku repositories via a
 
 ## Importers
 
-Importers for EPrints JSON, anddirectories of files.
+Importers for EPrints JSON, MARC, and directories of files.
 
 Please see the wiki for further info:
 
 * [Files_Directory_Importer](https://github.com/research-technologies/leaf_addons/wiki/Files_Directory_Importer)
 * [EPrints_Json_Importer](https://github.com/research-technologies/leaf_addons/wiki/EPrints_Json_Importer)
+* [MARC_Importer](https://github.com/research-technologies/leaf_addons/wiki/MARC_Importer)
 
 Install with:
 
@@ -55,6 +56,11 @@ rake leaf_addons:cleanup_accesscontrol
 ```
 
 User accounts tasks:
+
+List them with `rake -T leaf_addons`
+
+Including:
+
 ```
 rake leaf_addons:make_me_admin[email@address.com]
 rake leaf_addons:invite_user[email@address.com] # if devise invitible is enabled
