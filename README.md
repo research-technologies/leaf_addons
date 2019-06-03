@@ -47,6 +47,16 @@ Install with:
 rails g leaf_addons:coversheet
 ```
 
+## OAI-PMH
+
+Adds and enables an oai-pmh interface.
+
+Install with:
+
+```
+rails g leaf_addons:oai_pmh
+```
+
 ## Tasks
 
 Delete unused access control policies:

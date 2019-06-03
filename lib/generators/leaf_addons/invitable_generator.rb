@@ -24,8 +24,9 @@ This generator switches on and configures the devise-invitible gem.
   end
 
   def switch_off_registerable
-    gsub_file 'app/models/user.rb', ', :registerable', ''
-    gsub_file 'app/models/user.rb', ':registerable, ', ''
+    gsub_file 'app/models/user.rb', ', :registerable', '' # with comma and space
+    gsub_file 'app/models/user.rb', ', :registerable, ', '' # with comma no space
+    gsub_file 'app/models/user.rb', ':registerable, ', '' # at start
     inject_into_file 'app/models/user.rb', "\n  # :registerable", before: "\n  devise" unless File.read('app/models/user.rb').include? '# :registerable'
   end
 

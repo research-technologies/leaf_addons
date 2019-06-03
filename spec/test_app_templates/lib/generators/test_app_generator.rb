@@ -48,4 +48,8 @@ injection
   def install_coversheet
     generate 'leaf_addons:coversheet'
   end
+  
+  def install_oai_pmh
+    generate 'leaf_addons:oai_pmh'
+  end
 end
