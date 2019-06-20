@@ -20,7 +20,7 @@ module PrependFileSetsDerivativesService
     extract_full_text(filename, uri)
   end
 
-  # override method- change to using CoversheetDerivativePath
+  # override method - change to using CoversheetDerivativePath
   def derivative_path_factory
     LeafAddons::CoversheetDerivativePath
   end

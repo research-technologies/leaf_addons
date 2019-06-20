@@ -107,6 +107,7 @@ module LeafAddons
     def year(label)
       y = citation_object.citation.data.first[:issued]
       return unless y.is_a? CiteProc::Date
+      return if y.empty?
       coversheet.text "#{label}#{y}", inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[LeafAddons.config.coversheet_blocks['year'][:space]]
     end
@@ -132,6 +133,7 @@ module LeafAddons
     end
 
     def publication_status(label)
+      return if work.publication_status.first.blank?
       coversheet.text "#{label}#{work.publication_status.map do |l|
         AuthorityService::PublicationStatusesService.new.label(l)
       end.join(LeafAddons.config.coversheet_blocks['license'][:join])}", inline_format: true
@@ -140,6 +142,7 @@ module LeafAddons
     end
 
     def license(label)
+      return if work.license.first.blank?
       coversheet.text "#{label}<link href=\"#{work.license.first}\">#{Hyrax::LicenseService.new.label(work.license.first)}</link>", inline_format: true
     rescue
       work.license.join(LeafAddons.config.coversheet_blocks['license'][:join])
