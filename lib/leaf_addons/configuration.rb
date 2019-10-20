@@ -80,7 +80,8 @@ module LeafAddons
 
     attr_writer :coversheet_font
     def coversheet_font
-      @coversheet_font ||= 'Helvetica'
+#      @coversheet_font ||= 'Helvetica'
+      @coversheet_font ||= Rails.root.join("app/assets/fonts/OpenSans-Regular.ttf")
     end
 
     attr_writer :coversheet_fontsize_small
