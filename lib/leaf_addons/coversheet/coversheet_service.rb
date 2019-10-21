@@ -45,6 +45,7 @@ module LeafAddons
       coversheet.font_families.update(LeafAddons.config.coversheet_font =>{:normal=>font_file})
       coversheet.font LeafAddons.config.coversheet_font
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
+      Rails.logger.error("font : #{LeafAddons.config.coversheet_font}")
       LeafAddons.config.coversheet_blocks_in_order.each do |block|
         render(block, LeafAddons.config.coversheet_blocks[block]) if respond_to?(block)
       end
