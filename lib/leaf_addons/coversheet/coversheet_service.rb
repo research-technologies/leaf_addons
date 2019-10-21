@@ -39,11 +39,11 @@ module LeafAddons
       @coversheet = Prawn::Document.new(page_size: LeafAddons.config.coversheet_page_size,
                                         margin: LeafAddons.config.coversheet_margin)
       image
-      coversheet.font LeafAddons.config.coversheet_font
       #Load a ttf file to match the font from the config (DB a ttf file with a matching name will need to be put in place)
       font_file=Rails.root.join('app/assets/fonts/'+LeafAddons.config.coversheet_font+'.ttf')
       Rails.logger.error("font file : #{font_file}")
       coversheet.font_families.update(LeafAddons.config.coversheet_font =>{:normal=>font_file})
+      coversheet.font LeafAddons.config.coversheet_font
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
       LeafAddons.config.coversheet_blocks_in_order.each do |block|
         render(block, LeafAddons.config.coversheet_blocks[block]) if respond_to?(block)
