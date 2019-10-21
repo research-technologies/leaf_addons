@@ -41,7 +41,7 @@ module LeafAddons
       image
       coversheet.font LeafAddons.config.coversheet_font
       #Load a ttf file to match the font from the config (DB a ttf file with a matching name will need to be put in place)
-      font_file=Rails.root.join('assets/fonts/'+LeafAddons.config.coversheet_font+'.ttf')
+      font_file=Rails.root.join('app/assets/fonts/'+LeafAddons.config.coversheet_font+'.ttf')
       Rails.logger.error("font file : #{font_file}")
       coversheet.font_families.update(LeafAddons.config.coversheet_font =>{:normal=>font_file})
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
