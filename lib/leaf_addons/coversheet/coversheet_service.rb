@@ -42,15 +42,17 @@ module LeafAddons
       #Load a ttf file to match the font from the config (DB a ttf file with a matching name will need to be put in place)
 #      font_file=Rails.root.join('app/assets/fonts/'+LeafAddons.config.coversheet_font+'-Normal.ttf')
       
-      coversheet.font_families.update(
-         "Helvetica" => { :bold => Rails.root.join('app/assets/fonts/Helvetica-Bold.ttf'),
-                         :italic => Rails.root.join('app/assets/fonts/Helvetica-Italic.ttf'),
-                         :bold_italic => Rails.root.join('app/assets/fonts/Helvetica-Bold-Italic.ttf'),
-                         :normal => Rails.root.join('app/assets/fonts/Helvetica-Normal.ttf') } )
+#      coversheet.font_families.update(
+#         "Helvetica" => {:bold => Rails.root.join('app/assets/fonts/Helvetica-Bold.ttf'),
+#                         :italic => Rails.root.join('app/assets/fonts/Helvetica-Italic.ttf'),
+#                         :bold_italic => Rails.root.join('app/assets/fonts/Helvetica-Bold-Italic.ttf'),
+#                         :normal => Rails.root.join('app/assets/fonts/Helvetica-Normal.ttf') } )
 
 #      Rails.logger.error("font file : #{font_file}")
 #      coversheet.font_families.update(LeafAddons.config.coversheet_font =>{:normal=>font_file})
-      coversheet.font LeafAddons.config.coversheet_font
+      coversheet.font_families.update('Helvetica'=>{:normal=>Rails.root.join('app/assets/fonts/Helvetica-Normal.ttf')})
+      coversheet.font "Helvetica"
+#      coversheet.font LeafAddons.config.coversheet_font
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
       Rails.logger.error("font : #{LeafAddons.config.coversheet_font}")
       LeafAddons.config.coversheet_blocks_in_order.each do |block|
