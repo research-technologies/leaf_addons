@@ -1,0 +1,49 @@
+version: 2.1
+orbs:
+  samvera: samvera/circleci-orb@0
+jobs:
+  bundle_and_test:
+    parameters:
+      ruby_version:
+        type: string
+        default: 2.5.5
+      bundler_version:
+        type: string
+        default: 1.17.3
+        
+    executor:
+      name: 'samvera/ruby_fcrepo_solr'
+      ruby_version: << parameters.ruby_version >>
+
+    working_directory: ~/project
+
+    environment:
+      ENGINE_CART_RAILS_OPTIONS: --skip-git --skip-bundle --skip-listen --skip-spring --skip-yarn --skip-keeps --skip-coffee --skip-puma --skip-test
+      
+    steps:
+      - samvera/cached_checkout
+          
+      - samvera/bundle_for_gem:
+          ruby_version: << parameters.ruby_version >>
+          bundler_version: << parameters.bundler_version >>
+          project: leaf_addons
+    
+      - samvera/engine_cart_generate:
+#          cache_key: v1-internal-test-app-{{ checksum "leaf_addons.gemspec" }}-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}-{{ checksum "lib/generators/hyrax/iiif_av/install_generator.rb" }}
+          cache_key: v1-internal-test-app-{{ checksum "leaf_addons.gemspec" }}-
+
+      - samvera/install_solr_core:
+          solr_config_path: .internal_test_app/solr/config
+
+      - samvera/bundle_for_gem:
+          ruby_version: << parameters.ruby_version >>
+          bundler_version: << parameters.bundler_version >>
+          project: leaf_addons
+          
+      - samvera/parallel_rspec
+
+workflows:
+  ci:
+    jobs:
+      - bundle_and_test:
+          name: "ruby2-5-5"
