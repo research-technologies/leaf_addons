@@ -81,7 +81,7 @@ module LeafAddons
 
     def render_block(block_name, block_config)
       return if work.send(block_config[:attribute]).first.blank?
-      coversheet.text "#{label(block_name, block_config[:label])}#{work.send(block_config[:attribute]).join(block_config[:join])}"
+      coversheet.text "#{label(block_name, block_config[:label])}#{work.send(block_config[:attribute]).join(block_config[:join])}".force_encoding('UTF-8')
       coversheet.move_down LeafAddons.config.coversheet_spaces[block_config[:space]]
     end
 
