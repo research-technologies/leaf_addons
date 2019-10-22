@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 source 'https://rubygems.org'
 
 # until this is a rubygem, add it here
