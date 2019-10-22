@@ -43,10 +43,10 @@ module LeafAddons
 #      font_file=Rails.root.join('app/assets/fonts/'+LeafAddons.config.coversheet_font+'-Normal.ttf')
       
       coversheet.font_families.update(
-         LeafAddons.config.coversheet_font => { :bold => Rails.root.join('app/assets/fonts/'+LeafAddons.config.coversheet_font+'-Bold.ttf'),
-                         :italic      => Rails.root.join('app/assets/fonts/'+LeafAddons.config.coversheet_font+'-Italic.ttf'),
-                         :bold_italic => Rails.root.join('app/assets/fonts/'+LeafAddons.config.coversheet_font+'-Bold-Italic.ttf'),
-                         :normal      => Rails.root.join('app/assets/fonts/'+LeafAddons.config.coversheet_font+'-Normal.ttf') } )
+         "Helvetica" => { :bold => Rails.root.join('app/assets/fonts/Helvetica-Bold.ttf'),
+                         :italic => Rails.root.join('app/assets/fonts/Helvetica-Italic.ttf'),
+                         :bold_italic => Rails.root.join('app/assets/fonts/Helvetica-Bold-Italic.ttf'),
+                         :normal => Rails.root.join('app/assets/fonts/Helvetica-Normal.ttf') } )
 
 #      Rails.logger.error("font file : #{font_file}")
 #      coversheet.font_families.update(LeafAddons.config.coversheet_font =>{:normal=>font_file})
