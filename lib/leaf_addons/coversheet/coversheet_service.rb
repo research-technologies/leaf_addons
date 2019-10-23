@@ -86,7 +86,7 @@ module LeafAddons
     end
 
     def render_special(block_name, block_config)
-      send(block_name, label(block_name, block_config[:label])).force_encoding('UTF-8')
+      send(block_name, label(block_name, block_config[:label]))
       coversheet.move_down LeafAddons.config.coversheet_spaces[block_config[:space]]
     end
 
