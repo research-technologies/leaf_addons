@@ -144,7 +144,7 @@ module LeafAddons
 
     def license(label)
       return if work.license.first.blank?
-      coversheet.text "#{label}<link href=\"#{work.license.first}\">#{Hyrax::LicenseService.new.label(work.license.first)}</link>".force_encoding('UTF-8'), inline_format: true
+      coversheet.text "#{label}<link href=\"#{work.license.first}\">#{Hyrax::LicenseService.new.label(work.license.first)}</link>".dup.force_encoding('UTF-8'), inline_format: true
     rescue
       work.license.join(LeafAddons.config.coversheet_blocks['license'][:join])
     end
