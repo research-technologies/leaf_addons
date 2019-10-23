@@ -158,7 +158,7 @@ module LeafAddons
     end
 
     def citation(label)
-      coversheet.text label.force_encoding('UTF-8'), inline_format: true
+      coversheet.text label.dup.force_encoding('UTF-8'), inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[:small]
       coversheet.indent LeafAddons.config.coversheet_indent, LeafAddons.config.coversheet_indent do
         coversheet.text citation_object.render.join('; ').dup.force_encoding('UTF-8'), inline_format: true
