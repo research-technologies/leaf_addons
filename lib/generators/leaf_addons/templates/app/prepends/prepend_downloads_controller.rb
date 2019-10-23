@@ -48,4 +48,8 @@ module PrependDownloadsController
   def custom_file_name
     nil
   end
+  
+  def content_options
+    super.merge(disposition: 'inline')
+  end
 end
