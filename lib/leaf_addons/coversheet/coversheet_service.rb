@@ -125,19 +125,19 @@ module LeafAddons
 
     def url(label)
       url = "#{application_url}/downloads/#{object.id}"
-      coversheet.text "#{label}<link href=\"#{url}\">[#{url}]</link>".force_encoding('UTF-8'), align: :right, inline_format: true
+      coversheet.text "#{label}<link href=\"#{url}\">[#{url}]</link>".dup.force_encoding('UTF-8'), align: :right, inline_format: true
     end
 
     def available_url(label)
       url = "#{application_url}/concern/#{work.class.to_s.underscore.pluralize}/#{work.id}"
-      coversheet.text "#{label}<link href=\"#{url}\">#{url}</link>".force_encoding('UTF-8'), inline_format: true
+      coversheet.text "#{label}<link href=\"#{url}\">#{url}</link>".dup.force_encoding('UTF-8'), inline_format: true
     end
 
     def publication_status(label)
       return if work.publication_status.first.blank?
       coversheet.text "#{label}#{work.publication_status.map do |l|
         AuthorityService::PublicationStatusesService.new.label(l)
-      end.join(LeafAddons.config.coversheet_blocks['license'][:join])}".force_encoding('UTF-8'), inline_format: true
+      end.join(LeafAddons.config.coversheet_blocks['license'][:join])}".dup.force_encoding('UTF-8'), inline_format: true
     rescue
       work.publication_status.join(LeafAddons.config.coversheet_blocks['publication_status'][:join])
     end
@@ -161,21 +161,21 @@ module LeafAddons
       coversheet.text label.force_encoding('UTF-8'), inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[:small]
       coversheet.indent LeafAddons.config.coversheet_indent, LeafAddons.config.coversheet_indent do
-        coversheet.text citation_object.render.join('; ').force_encoding('UTF-8'), inline_format: true
+        coversheet.text citation_object.render.join('; ').dup.force_encoding('UTF-8'), inline_format: true
       end
     end
 
     # rubocop:disable Rails/TimeZone
     def submitted_date(label)
       d = DateTime.parse(work.date_uploaded.to_s)
-      coversheet.text "#{label}#{d.to_date}".force_encoding('UTF-8'), inline_format: true
+      coversheet.text "#{label}#{d.to_date}".dup.force_encoding('UTF-8'), inline_format: true
     rescue ArgumentError => e
       Rails.logger.error(e)
     end
     # rubocop:enable Rails/TimeZone
 
     def copyright_statement(label)
-      coversheet.text "#{label}#{I18n.t('coversheet.copyright_statement_text')}", valign: :bottom
+      coversheet.text "#{label}#{I18n.t('coversheet.copyright_statement_text')}".dup.force_encoding('UTF-8'), valign: :bottom
     end
 
     def application_url
