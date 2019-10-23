@@ -81,7 +81,7 @@ module LeafAddons
 
     def render_block(block_name, block_config)
       return if work.send(block_config[:attribute]).first.blank?
-      coversheet.text "#{label(block_name, block_config[:label])}#{work.send(block_config[:attribute]).join(block_config[:join])}".force_encoding('UTF-8')
+      coversheet.text "#{label(block_name, block_config[:label])}#{work.send(block_config[:attribute]).join(block_config[:join])}"
       coversheet.move_down LeafAddons.config.coversheet_spaces[block_config[:space]]
     end
 
@@ -95,7 +95,7 @@ module LeafAddons
       l = "#{I18n.t('coversheet.' + block_name)}: "
       l = "<b>#{l}</b>" if LeafAddons.config.coversheet_labels_bold == true
       l = "<i>#{l}</i>" if LeafAddons.config.coversheet_labels_italic == true
-      l.force_encoding('UTF-8')
+      l
     end
 
     def author_title(label)
@@ -109,42 +109,42 @@ module LeafAddons
       y = citation_object.citation.data.first[:issued]
       return unless y.is_a? CiteProc::Date
       return if y.empty?
-      coversheet.text "#{label}#{y}".force_encoding('UTF-8'), inline_format: true
+      coversheet.text "#{label}#{y}", inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[LeafAddons.config.coversheet_blocks['year'][:space]]
     end
 
     # can't guarantee order, so just take the first abstract
     def abstract(label)
       return if work.abstract.first.blank?
-      coversheet.text label.to_s.force_encoding('UTF-8'), inline_format: true
+      coversheet.text label.to_s, inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[:small]
       coversheet.indent LeafAddons.config.coversheet_indent, LeafAddons.config.coversheet_indent do
-        coversheet.text work.abstract.first.to_s.force_encoding('UTF-8')
+        coversheet.text work.abstract.first.to_s
       end
     end
 
     def url(label)
       url = "#{application_url}/downloads/#{object.id}"
-      coversheet.text "#{label}<link href=\"#{url}\">[#{url}]</link>".dup.force_encoding('UTF-8'), align: :right, inline_format: true
+      coversheet.text "#{label}<link href=\"#{url}\">[#{url}]</link>", align: :right, inline_format: true
     end
 
     def available_url(label)
       url = "#{application_url}/concern/#{work.class.to_s.underscore.pluralize}/#{work.id}"
-      coversheet.text "#{label}<link href=\"#{url}\">#{url}</link>".dup.force_encoding('UTF-8'), inline_format: true
+      coversheet.text "#{label}<link href=\"#{url}\">#{url}</link>", inline_format: true
     end
 
     def publication_status(label)
       return if work.publication_status.first.blank?
       coversheet.text "#{label}#{work.publication_status.map do |l|
         AuthorityService::PublicationStatusesService.new.label(l)
-      end.join(LeafAddons.config.coversheet_blocks['license'][:join])}".dup.force_encoding('UTF-8'), inline_format: true
+      end.join(LeafAddons.config.coversheet_blocks['license'][:join])}", inline_format: true
     rescue
       work.publication_status.join(LeafAddons.config.coversheet_blocks['publication_status'][:join])
     end
 
     def license(label)
       return if work.license.first.blank?
-      coversheet.text "#{label}<link href=\"#{work.license.first}\">#{Hyrax::LicenseService.new.label(work.license.first)}</link>".dup.force_encoding('UTF-8'), inline_format: true
+      coversheet.text "#{label}<link href=\"#{work.license.first}\">#{Hyrax::LicenseService.new.label(work.license.first)}</link>", inline_format: true
     rescue
       work.license.join(LeafAddons.config.coversheet_blocks['license'][:join])
     end
@@ -158,24 +158,24 @@ module LeafAddons
     end
 
     def citation(label)
-      coversheet.text label.dup.force_encoding('UTF-8'), inline_format: true
+      coversheet.text label, inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[:small]
       coversheet.indent LeafAddons.config.coversheet_indent, LeafAddons.config.coversheet_indent do
-        coversheet.text citation_object.render.join('; ').dup.force_encoding('UTF-8'), inline_format: true
+        coversheet.text citation_object.render.join('; '), inline_format: true
       end
     end
 
     # rubocop:disable Rails/TimeZone
     def submitted_date(label)
       d = DateTime.parse(work.date_uploaded.to_s)
-      coversheet.text "#{label}#{d.to_date}".dup.force_encoding('UTF-8'), inline_format: true
+      coversheet.text "#{label}#{d.to_date}", inline_format: true
     rescue ArgumentError => e
       Rails.logger.error(e)
     end
     # rubocop:enable Rails/TimeZone
 
     def copyright_statement(label)
-      coversheet.text "#{label}#{I18n.t('coversheet.copyright_statement_text')}".dup.force_encoding('UTF-8'), valign: :bottom
+      coversheet.text "#{label}#{I18n.t('coversheet.copyright_statement_text')}", valign: :bottom
     end
 
     def application_url
