@@ -21,7 +21,7 @@ module PrependDownloadsController
     if file_reference.blank?
       file_path = load_service_file
       return default_file if file_path.blank?
-#      return default_file if file_path == true
+      return default_file if file_path == true
     else
       file_path = Hyrax::DerivativePath.derivative_path_for_reference(params[asset_param_key], file_reference)
     end
