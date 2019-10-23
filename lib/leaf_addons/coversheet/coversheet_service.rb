@@ -100,7 +100,7 @@ module LeafAddons
 
     def author_title(label)
       coversheet.font_size LeafAddons.config.coversheet_fontsize_large
-      coversheet.text "#{label}#{work.creator.join(',')}. <i>#{work.title.join(':')}.</i>", inline_format: true
+      coversheet.text "#{label}#{work.creator.join(',')}. <i>#{work.title.join(':')}.</i>".force_encoding('UTF-8'), inline_format: true
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
     end
 
