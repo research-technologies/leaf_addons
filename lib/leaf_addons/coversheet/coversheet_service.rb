@@ -42,7 +42,7 @@ module LeafAddons
       coversheet.font LeafAddons.config.coversheet_font
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
       LeafAddons.config.coversheet_blocks_in_order.each do |block|
-        render(block, LeafAddons.config.coversheet_blocks[block]) if respond_to?(block)
+        render(block, LeafAddons.config.coversheet_blocks[block]) if LeafAddons.config.coversheet_blocks.key?(block)
       end
     end
 
@@ -81,7 +81,7 @@ module LeafAddons
 
     def render_block(block_name, block_config)
       return if work.send(block_config[:attribute]).first.blank?
-      coversheet.text "#{label(block_name, block_config[:label])}#{work.send(block_config[:attribute]).join(block_config[:join])}".force_encoding('UTF-8')
+      coversheet.text "#{label(block_name, block_config[:label])}"+"#{work.send(block_config[:attribute]).join(block_config[:join])}".force_encoding('UTF-8'), inline_format: true
       coversheet.move_down LeafAddons.config.coversheet_spaces[block_config[:space]]
     end
 
@@ -100,7 +100,7 @@ module LeafAddons
 
     def author_title(label)
       coversheet.font_size LeafAddons.config.coversheet_fontsize_large
-      coversheet.text "#{label}#{work.creator.join(',')}. <i>#{work.title.join(':')}.</i>".force_encoding('UTF-8'), inline_format: true
+      coversheet.text "#{label}#{work.creator.join(', ')}. <i>#{work.title.join(':')}.</i>".force_encoding('UTF-8'), inline_format: true
       coversheet.font_size LeafAddons.config.coversheet_fontsize_small
     end
 
