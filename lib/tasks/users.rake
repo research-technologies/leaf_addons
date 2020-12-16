@@ -46,7 +46,24 @@ namespace :leaf_addons do
       puts "the admin column should contain the word true to indicate that the given user should be an admin"
     else
       begin
-        process_user_csv(args[:path])
+        process_user_csv(args[:path],:invite_user)
+      rescue
+        puts "The file, #{args[:path]}, does not exist or is invalid, please check the path is correct and make " \
+        "sure the file is in the right format (comma separated)"
+      end
+    end
+  end
+
+  desc "Remove users to a Hyku given in the supplied csv file_path. The csv must contain a header row and one column: " \
+        "email."
+  task :remove_users, [:path] => [:environment] do |_t, args|
+    if args[:path].nil?
+      puts 'Supply the path to a csv file, like this'
+      puts "rake leaf_addons:invite_users['/tmp/my_file.csv']"
+      puts "the CSV file must contain a header row and one column: email"
+    else
+      begin
+        process_user_csv(args[:path],:remove_user)
       rescue
         puts "The file, #{args[:path]}, does not exist or is invalid, please check the path is correct and make " \
         "sure the file is in the right format (comma separated)"
@@ -81,6 +98,9 @@ namespace :leaf_addons do
   # @param display_name [String] display name for the new user
   # @param admin [Boolean] true if the new user should be made an admin
   def invite_user(email, name = nil, admin = false)
+    email = email.downcase.strip
+    name = name.nil? ? nil : name.strip
+    admin = true unless admin.nil? && admin != "true"
     display_name = name ? name : "User"
     if User.find_by(email: email).nil?
       user = User.invite!(email: email, display_name: display_name)
@@ -94,22 +114,20 @@ namespace :leaf_addons do
   # Read the csv and process each line
   #
   # @param csv [String] the path to a csv file
-  def process_user_csv(csv)
+  def process_user_csv(csv,method)
     users = CSV.read(csv)
     users.shift # skip header row
     users.each do |line|
-      process_user_line(line)
+      process_user_line(line,method)
     end
   end
 
   # Process a single line from the users csv
   #
   # @param line [Array] an array of data from the users csv
-  def process_user_line(line)
+  def process_user_line(line, method)
     return if line.blank?
-    name = line[1].nil? ? nil : line[1].strip
-    admin = true unless line[2].nil? && line[2] != "true"
-    invite_user(line[0].downcase.strip, name, admin) if validate_email(line[0])
+    send(method,*line) if validate_email(line[0])
   end
 
   # Check that the email is valid (ie. that it contains '@')
@@ -123,5 +141,17 @@ namespace :leaf_addons do
       false
     end
   end
+
+  def remove_user(email)
+    email = email.strip
+    if User.find_by(email: email).nil?
+      puts "#{email} not found"
+    else
+      user = User.find_by(email: email)
+      user.destroy
+      puts "#{email} (#{user.id}) has been removed"
+    end
+  end
+
 end
 # rubocop:enable Metrics/BlockLength
