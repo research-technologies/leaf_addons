@@ -50,7 +50,7 @@ module LeafAddons
       pdf_path = CoversheetDerivativePath.derivative_path_for_reference(object, 'service_file').gsub('.pdf', '_withcover.pdf')
       pdf = CombinePDF.new
       pdf << CombinePDF.parse(coversheet.render)
-      pdf << CombinePDF.load(file_path) unless file_path.nil?
+      pdf << CombinePDF.load(file_path, allow_optional_content: true) unless file_path.nil?
       pdf << CombinePDF.parse(http_request(file_url)) unless file_url.blank?
       pdf.save pdf_path
       pdf_path
