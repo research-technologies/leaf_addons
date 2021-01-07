@@ -43,7 +43,7 @@ This generator switches on and configures the blacklight_oai_provider gem.
       title: 'title_tesim',
       type: 'human_readable_type_tesim'
     ))
-    inject_into_file 'app/models/solr_document.rb', "#{field_semantics}\n", before: "\nend" unless File.read('app/models/solr_document.rb').include? field_semantics
+    inject_into_file 'app/models/solr_document.rb', "#{field_semantics}\n", before: "\nend" unless File.read('app/models/solr_document.rb').include? 'field_semantics.merge!'
   end
 
   def update_catalog_controller
