@@ -1,3 +1,5 @@
+require 'csv'
+
 # rubocop:disable Metrics/BlockLength
 namespace :leaf_addons do
   desc "Make users administrators in Hyku. Supply a space separated list, eg ['person1@example.com person2@example.com']."
