@@ -12,7 +12,8 @@ This generator switches on and configures the blacklight_oai_provider gem.
   end
 
   def add_to_gemfile
-    gem 'blacklight_oai_provider', '~> 6.0'
+    gem 'oai'
+    gem 'blacklight_oai_provider', '~> 6'
     Bundler.with_clean_env do
       run "bundle install"
     end
