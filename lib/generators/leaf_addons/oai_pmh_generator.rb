@@ -11,13 +11,13 @@ This generator switches on and configures the blacklight_oai_provider gem.
     say_status("info", "Adding blacklight_oai_provider", :blue)
   end
 
-  def add_to_gemfile
-    gem 'oai'
-    gem 'blacklight_oai_provider', '~> 6'
-    Bundler.with_unbundled_env do
-      run "bundle install"
-    end
-  end
+ # def add_to_gemfile
+ #   gem 'oai'
+ #   gem 'blacklight_oai_provider', '~> 6'
+ #   Bundler.with_unbundled_env do
+ #     run "bundle install"
+ #   end
+ # end
 
   def generate_install
     generate 'blacklight_oai_provider:install'
@@ -30,7 +30,8 @@ This generator switches on and configures the blacklight_oai_provider gem.
     solr_doc = '  BlacklightOaiProvider::SolrDocument'
     inject_into_file 'app/models/solr_document.rb', "#{solr_doc}\n", after: "include Blacklight::Solr::Document\n" unless File.read('app/models/solr_document.rb').include? solr_doc
 
-    field_semantics = %(  field_semantics.merge!(
+    field_semantics = %(  
+   field_semantics.merge!(
       contributor: 'contributor_tesim',
       creator: 'creator_tesim',
       date: 'date_created_tesim',
